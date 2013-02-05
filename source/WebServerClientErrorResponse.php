@@ -11,7 +11,8 @@ final class WebServerClientErrorResponse {
     /**
      * Error string constants
      */
-    const   STRING_INVALID_GRANT    = 'invalid_grant';
+    const   STRING_INVALID_GRANT    = 'invalid_grant',
+            STRING_INVALID_CLIENT   = 'invalid_client';
 
     /**
      * @var string google error code
@@ -34,6 +35,14 @@ final class WebServerClientErrorResponse {
      */
     public function isInvalidGrant() {
         return $this->error == self::STRING_INVALID_GRANT;
+    }
+
+    /**
+     * Getter for invalid client error
+     * @return bool if error is invalid client
+     */
+    public function isInvalidClient() {
+        return $this->error == self::STRING_INVALID_CLIENT;
     }
 
     /**
