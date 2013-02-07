@@ -1,13 +1,13 @@
 <?php
 
-namespace Google\Client;
+namespace Google\Client\OAuth2\Response;
 
 /**
  * Class for successful request
  * @author alxmsl
  * @date 2/4/13
  */ 
-final class WebServerClientResponse {
+final class TokenResponse {
     /**
      * Token type constants
      */
@@ -52,7 +52,7 @@ final class WebServerClientResponse {
     /**
      * Setter for access token
      * @param string $accessToken access token
-     * @return WebServerClientResponse self
+     * @return TokenResponse self
      */
     private function setAccessToken($accessToken) {
         $this->accessToken = (string) $accessToken;
@@ -70,7 +70,7 @@ final class WebServerClientResponse {
     /**
      * Setter for access token expires in
      * @param int $expiresIn access token expires in
-     * @return WebServerClientResponse self
+     * @return TokenResponse self
      */
     public function setExpiresIn($expiresIn) {
         $this->expiresIn = (int) $expiresIn;
@@ -88,7 +88,7 @@ final class WebServerClientResponse {
     /**
      * Setter for id token
      * @param string $idToken id token
-     * @return WebServerClientResponse self
+     * @return TokenResponse self
      */
     public function setIdToken($idToken) {
         $this->idToken = (string) $idToken;
@@ -106,7 +106,7 @@ final class WebServerClientResponse {
     /**
      * Setter for refresh token
      * @param string $refreshToken refresh token
-     * @return WebServerClientResponse self
+     * @return TokenResponse self
      */
     public function setRefreshToken($refreshToken) {
         $this->refreshToken = (string) $refreshToken;
@@ -128,7 +128,7 @@ final class WebServerClientResponse {
     /**
      * Setter for token type
      * @param string $tokenType token type string
-     * @return WebServerClientResponse self
+     * @return TokenResponse self
      */
     public function setTokenType($tokenType) {
         switch ($tokenType) {
@@ -168,7 +168,7 @@ final class WebServerClientResponse {
     /**
      * Method for object initialization by the string
      * @param string $string response string
-     * @return WebServerClientResponse response object
+     * @return TokenResponse response object
      */
     public static function initializeByString($string) {
         $object = json_decode($string);

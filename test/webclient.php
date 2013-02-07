@@ -13,7 +13,7 @@ const   CLIENT_ID       = 'my client id',
         CLIENT_SECRET   = 'my client secret code';
 
 // Create new client
-$Client = new \Google\Client\WebServerClient();
+$Client = new \Google\Client\OAuth2\WebServerApplication();
 $Client->setClientId(CLIENT_ID)
     ->setClientSecret(CLIENT_SECRET)
     ->setRedirectUri('http://example.com/oauth2callback');
@@ -22,7 +22,7 @@ $Client->setClientId(CLIENT_ID)
 $url = $Client->createAuthUrl(array(
     'https://www.googleapis.com/auth/userinfo.email',
     'https://www.googleapis.com/auth/userinfo.profile',
-), '', \Google\Client\Client::RESPONSE_TYPE_CODE, \Google\Client\Client::ACCESS_TYPE_OFFLINE);
+), '', \Google\Client\OAuth2\WebServerApplication::RESPONSE_TYPE_CODE, \Google\Client\OAuth2\WebServerApplication::ACCESS_TYPE_OFFLINE);
 var_dump($url);
 
 // Get access token

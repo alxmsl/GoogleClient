@@ -15,11 +15,11 @@ final class Autoloader {
      * @var array array of available classes
      */
     private static $classes = array(
-        'Google\\Client\\Autoloader'        => 'Autoloader.php',
-        'Google\\Client\\Client'            => 'Client.php',
-        'Google\\Client\\WebServerClient'   => 'WebServerClient.php',
-        'Google\\Client\\WebServerClientResponse' => 'WebServerClientResponse.php',
-        'Google\\Client\\WebServerClientErrorResponse' => 'WebServerClientErrorResponse.php',
+        'Google\\Client\\Autoloader'                      => 'Autoloader.php',
+        'Google\\Client\\OAuth2\\Client'                  => 'OAuth2/Client.php',
+        'Google\\Client\\OAuth2\\WebServerApplication'    => 'OAuth2/WebServerApplication.php',
+        'Google\\Client\\OAuth2\\Response\\TokenResponse' => 'OAuth2/Response/TokenResponse.php',
+        'Google\\Client\\OAuth2\\Response\\ErrorResponse' => 'OAuth2/Response/ErrorResponse.php',
     );
 
     /**

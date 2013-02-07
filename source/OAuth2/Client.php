@@ -1,6 +1,6 @@
 <?php
 
-namespace Google\Client;
+namespace Google\Client\OAuth2;
 
 use Network\Http\Request;
 
@@ -10,34 +10,6 @@ use Network\Http\Request;
  * @date 1/13/13
  */ 
 abstract class Client {
-    /**
-     * Response type constants
-     */
-    const   RESPONSE_TYPE_CODE  = 'code';
-
-    /**
-     * Access type constants
-     */
-    const   ACCESS_TYPE_ONLINE  = 'online',
-            ACCESS_TYPE_OFFLINE = 'offline';
-
-    /**
-     * Approval constants
-     */
-    const   APPROVAL_PROMPT_AUTO    = 'auto',
-            APPROVAL_PROMPT_FORCE   = 'force';
-
-    /**
-     * Grant type constants
-     */
-    const   GRANT_TYPE_AUTHORIZATION    = 'authorization_code',
-            GRANT_TYPE_REFRESH          = 'refresh_token';
-
-    /**
-     * @var Request[] requests cache
-     */
-    private $requests = array();
-
     /**
      * @var string client identifier
      */
@@ -52,6 +24,11 @@ abstract class Client {
      * @var string redirect uri
      */
     private $redirectUri = '';
+
+    /**
+     * @var string access token
+     */
+    private $accessToken = '';
 
     /**
      * @var int connect timeout, seconds
@@ -69,16 +46,11 @@ abstract class Client {
      * @return Request request object
      */
     protected function getRequest($url) {
-        $key = md5($url);
-        if (!isset($this->requests[$key])) {
-            $Request = new Request();
-            $Request->setUrl($url)
-                ->setConnectTimeout($this->getConnectTimeout())
-                ->setTimeout($this->getRequestTimeout());
-            $Request->setTransport(Request::TRANSPORT_CURL);
-            $this->requests[$key] = $Request;
-        }
-        return $this->requests[$key];
+        $Request = new Request();
+        $Request->setTransport(Request::TRANSPORT_CURL);
+        return $Request->setUrl($url)
+            ->setConnectTimeout($this->getConnectTimeout())
+            ->setTimeout($this->getRequestTimeout());
     }
 
     /**
@@ -133,6 +105,24 @@ abstract class Client {
      */
     public function getRedirectUri() {
         return $this->redirectUri;
+    }
+
+    /**
+     * Setter for access token value
+     * @param string $accessToken access token value
+     * @return Client self
+     */
+    public function setAccessToken($accessToken) {
+        $this->accessToken = $accessToken;
+        return $this;
+    }
+
+    /**
+     * Getter for access token
+     * @return string access token value
+     */
+    public function getAccessToken() {
+        return $this->accessToken;
     }
 
     /**

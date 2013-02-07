@@ -1,13 +1,13 @@
 <?php
 
-namespace Google\Client;
+namespace Google\Client\OAuth2\Response;
 
 /**
  * Class for error response
  * @author alxmsl
  * @date 2/5/13
  */ 
-final class WebServerClientErrorResponse {
+final class ErrorResponse {
     /**
      * Error string constants
      */
@@ -22,7 +22,7 @@ final class WebServerClientErrorResponse {
     /**
      * Setter for error code
      * @param string $error error code
-     * @return WebServerClientErrorResponse self
+     * @return ErrorResponse self
      */
     private function setError($error) {
         $this->error = (string) $error;
@@ -53,7 +53,7 @@ final class WebServerClientErrorResponse {
     /**
      * Method for object initialization by the string
      * @param string $string response string
-     * @return WebServerClientErrorResponse error object
+     * @return ErrorResponse error object
      */
     public static function initializeByString($string) {
         $object = json_decode($string);
