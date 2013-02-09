@@ -3,7 +3,7 @@
 namespace Google\Client\OAuth2;
 
 use Google\Client\OAuth2\Response\Token,
-    Google\Client\OAuth2\Response\ErrorResponse;
+    Google\Client\OAuth2\Response\Error;
 
 /**
  * Class for login via web server applications
@@ -89,7 +89,7 @@ class WebServerApplication extends Client {
     /**
      * Method for get access token by user authorization code
      * @param string $code user authorization code
-     * @return ErrorResponse|Token Google Api response object
+     * @return Error|Token Google Api response object
      */
     public function authorizeByCode($code) {
         $Request = $this->getRequest(self::ENDPOINT_ACCESS_TOKEN_REQUEST);
@@ -103,7 +103,7 @@ class WebServerApplication extends Client {
             $this->setToken($Token);
             return $Token;
         } catch (\Network\Http\HttpClientErrorCodeException $ex) {
-            return ErrorResponse::initializeByString($ex->getMessage());
+            return Error::initializeByString($ex->getMessage());
         }
     }
 

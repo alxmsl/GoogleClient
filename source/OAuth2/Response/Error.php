@@ -9,7 +9,7 @@ use \Google\Client\InitializationInterface;
  * @author alxmsl
  * @date 2/5/13
  */ 
-final class ErrorResponse implements InitializationInterface {
+final class Error implements InitializationInterface {
     /**
      * Error string constants
      */
@@ -24,7 +24,7 @@ final class ErrorResponse implements InitializationInterface {
     /**
      * Setter for error code
      * @param string $error error code
-     * @return ErrorResponse self
+     * @return Error self
      */
     private function setError($error) {
         $this->error = (string) $error;
@@ -55,7 +55,7 @@ final class ErrorResponse implements InitializationInterface {
     /**
      * Method for object initialization by the string
      * @param string $string response string
-     * @return ErrorResponse error object
+     * @return Error error object
      */
     public static function initializeByString($string) {
         $object = json_decode($string);
