@@ -82,14 +82,14 @@ final class Error implements InitializationInterface {
     /**
      * Method for object initialization by the string
      * @param string $string error data string
-     * @return Resource error object
+     * @return Error error object
      */
     public static function initializeByString($string) {
         $object = json_decode($string);
         $Error = new self();
-        $Error->setCode($object->error->code)
-            ->setErrors((array) $object->error->errors)
-            ->setMessage($object->error->message);
+        isset($object->error->code) && $Error->setCode($object->error->code);
+        isset($object->error->errors) && $Error->setErrors((array) $object->error->errors);
+        isset($object->error->message) && $Error->setMessage($object->error->message);
         return $Error;
     }
 }

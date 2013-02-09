@@ -59,7 +59,26 @@ final class Purchases extends WebServerApplication {
             try {
                 return Resource::initializeByString($Request->send());
             } catch (\Network\Http\HttpClientErrorCodeException $ex) {
-                return Error::initializeByString($ex->getMessage());
+                switch ($ex->getCode()) {
+                    case 400:
+                    case 401:
+                    case 404:
+                        $Error = Error::initializeByString($ex->getMessage());
+                        if ($Error->getCode()) {
+                            return $Error;
+                        } else {
+                            throw $ex;
+                        }
+                    default:
+                        throw $ex;
+                }
+            } catch (\Network\Http\HttpServerErrorCodeException $ex) {
+                switch ($ex->getCode()) {
+                    case 500:
+                        return Error::initializeByString($ex->getMessage());
+                    default:
+                        throw $ex;
+                }
             }
         } else {
             throw new \UnexpectedValueException();
