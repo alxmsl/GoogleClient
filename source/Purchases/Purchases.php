@@ -4,6 +4,7 @@ namespace Google\Client\Purchases;
 
 use \Google\Client\OAuth2\WebServerApplication,
     \Google\Client\Purchases\Response\Resource,
+    Google\Client\Purchases\Response\Error,
     \Network\Http\Request;
 
 /**
@@ -44,7 +45,7 @@ final class Purchases extends WebServerApplication {
      * Check user subscription
      * @param string $productId product identifier
      * @param string $subscriptionId subscription identifier
-     * @return Response\Resource user subscription data
+     * @return Resource|Error user subscription data
      * @throws \UnexpectedValueException when access token not presented
      */
     public function get($productId, $subscriptionId) {
@@ -55,7 +56,11 @@ final class Purchases extends WebServerApplication {
                 ->addUrlField('subscriptions', $productId)
                 ->addUrlField('purchases', $subscriptionId)
                 ->addGetField('access_token', $accessToken);
-            return Resource::initializeByString($Request->send());
+            try {
+                return Resource::initializeByString($Request->send());
+            } catch (\Network\Http\HttpClientErrorCodeException $ex) {
+                return Error::initializeByString($ex->getMessage());
+            }
         } else {
             throw new \UnexpectedValueException();
         }
@@ -65,7 +70,7 @@ final class Purchases extends WebServerApplication {
      * Cancel user subscription
      * @param string $productId product identifier
      * @param string $subscriptionId subscription identifier
-     * @return bool user subscription cancellation result
+     * @return bool|Error user subscription cancellation result
      * @throws \UnexpectedValueException when access token not presented
      */
     public function cancel($productId, $subscriptionId) {
@@ -78,7 +83,11 @@ final class Purchases extends WebServerApplication {
                 ->addUrlField('cancel')
                 ->addGetField('access_token', $accessToken);
             $Request->setMethod(Request::METHOD_POST);
-            return $Request->send() === '';
+            try {
+                return $Request->send() === '';
+            } catch (\Network\Http\HttpClientErrorCodeException $ex) {
+                return Error::initializeByString($ex->getMessage());
+            }
         } else {
             throw new \UnexpectedValueException();
         }

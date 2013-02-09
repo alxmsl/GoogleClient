@@ -23,6 +23,7 @@ final class Autoloader {
         'Google\\Client\\OAuth2\\Response\\ErrorResponse' => 'OAuth2/Response/ErrorResponse.php',
         'Google\\Client\\Purchases\\Purchases'            => 'Purchases/Purchases.php',
         'Google\\Client\\Purchases\\Response\\Resource'   => 'Purchases/Response/Resource.php',
+        'Google\\Client\\Purchases\\Response\\Error'      => 'Purchases/Response/Error.php',
     );
 
     /**

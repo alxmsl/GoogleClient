@@ -25,6 +25,9 @@ $url = $Client->createAuthUrl(array(
 ), '', \Google\Client\OAuth2\WebServerApplication::RESPONSE_TYPE_CODE, \Google\Client\OAuth2\WebServerApplication::ACCESS_TYPE_OFFLINE);
 var_dump($url);
 
+// Define client authorization code
+const   CLIENT_CODE = '4/E-sLNekvMUD99lYT39XYZBWRwGaK.UiZFTQZSjAYcsNf4jSFBMpaIucRNeQI';
+
 // Get access token
-$Token = $Client->authorizeByCode('4/E-sLNekvMUD99lYT39XYZBWRwGaK.UiZFTQZSjAYcsNf4jSFBMpaIucRNeQI');
+$Token = $Client->authorizeByCode(CLIENT_CODE);
 var_dump($Token);

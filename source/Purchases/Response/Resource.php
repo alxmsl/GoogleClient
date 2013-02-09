@@ -44,7 +44,7 @@ final class Resource implements InitializationInterface {
      * Getter auto renewing value
      * @return bool auto renewed value
      */
-    public function getAutoRenew() {
+    public function isAutoRenew() {
         return $this->autoRenew;
     }
 
