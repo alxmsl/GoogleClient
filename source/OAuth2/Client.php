@@ -2,7 +2,8 @@
 
 namespace Google\Client\OAuth2;
 
-use Network\Http\Request;
+use \Network\Http\Request,
+    \Google\Client\OAuth2\Response\Token;
 
 /**
  * Abstract Google client class
@@ -113,12 +114,12 @@ abstract class Client {
      * @return Client self
      */
     public function setAccessToken($accessToken) {
-        $this->accessToken = $accessToken;
+        $this->accessToken = (string) $accessToken;
         return $this;
     }
 
     /**
-     * Getter for access token
+     * Getter for access token value
      * @return string access token value
      */
     public function getAccessToken() {

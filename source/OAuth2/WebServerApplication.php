@@ -2,7 +2,7 @@
 
 namespace Google\Client\OAuth2;
 
-use Google\Client\OAuth2\Response\TokenResponse,
+use Google\Client\OAuth2\Response\Token,
     Google\Client\OAuth2\Response\ErrorResponse;
 
 /**
@@ -10,7 +10,7 @@ use Google\Client\OAuth2\Response\TokenResponse,
  * @author alxmsl
  * @date 1/13/13
  */ 
-final class WebServerApplication extends Client {
+class WebServerApplication extends Client {
     /**
      * Response type constants
      */
@@ -41,6 +41,30 @@ final class WebServerApplication extends Client {
             ENDPOINT_ACCESS_TOKEN_REQUEST = 'https://accounts.google.com/o/oauth2/token';
 
     /**
+     * @var \Google\Client\OAuth2\Response\Token access token
+     */
+    private $Token = null;
+
+    /**
+     * Setter for token value
+     * @param Token $Token token object
+     * @return Client self
+     */
+    public function setToken(Token $Token) {
+        $this->Token = $Token;
+        $this->setAccessToken($this->Token->getAccessToken());
+        return $this;
+    }
+
+    /**
+     * Getter for token
+     * @return Token access token value
+     */
+    public function getToken() {
+        return $this->Token;
+    }
+
+    /**
      * Method for create authorization url
      * @param string[] $scopes set of permissions
      * @param string $state something state
@@ -65,9 +89,9 @@ final class WebServerApplication extends Client {
     /**
      * Method for get access token by user authorization code
      * @param string $code user authorization code
-     * @return ErrorResponse|TokenResponse Google Api response object
+     * @return ErrorResponse|Token Google Api response object
      */
-    public function getAccessToken($code) {
+    public function authorizeByCode($code) {
         $Request = $this->getRequest(self::ENDPOINT_ACCESS_TOKEN_REQUEST);
         $Request->addPostField('code', $code)
             ->addPostField('client_id', $this->getClientId())
@@ -75,14 +99,16 @@ final class WebServerApplication extends Client {
             ->addPostField('redirect_uri', $this->getRedirectUri())
             ->addPostField('grant_type', self::GRANT_TYPE_AUTHORIZATION);
         try {
-            return TokenResponse::initializeByString($Request->send());
+            $Token = Token::initializeByString($Request->send());
+            $this->setToken($Token);
+            return $Token;
         } catch (\Network\Http\HttpClientErrorCodeException $ex) {
             return ErrorResponse::initializeByString($ex->getMessage());
         }
     }
 
     //TODO: Метод обновления токена доступа по токену обновления
-    public function refreshAccessToken($refreshToken) {
+    public function refresh($refreshToken) {
 
     }
 }

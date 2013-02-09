@@ -16,10 +16,13 @@ final class Autoloader {
      */
     private static $classes = array(
         'Google\\Client\\Autoloader'                      => 'Autoloader.php',
+        'Google\\Client\\InitializationInterface'         => 'InitializationInterface.php',
         'Google\\Client\\OAuth2\\Client'                  => 'OAuth2/Client.php',
         'Google\\Client\\OAuth2\\WebServerApplication'    => 'OAuth2/WebServerApplication.php',
-        'Google\\Client\\OAuth2\\Response\\TokenResponse' => 'OAuth2/Response/TokenResponse.php',
+        'Google\\Client\\OAuth2\\Response\\Token'         => 'OAuth2/Response/Token.php',
         'Google\\Client\\OAuth2\\Response\\ErrorResponse' => 'OAuth2/Response/ErrorResponse.php',
+        'Google\\Client\\Purchases\\Purchases'            => 'Purchases/Purchases.php',
+        'Google\\Client\\Purchases\\Response\\Resource'   => 'Purchases/Response/Resource.php',
     );
 
     /**

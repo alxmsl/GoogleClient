@@ -2,12 +2,14 @@
 
 namespace Google\Client\OAuth2\Response;
 
+use \Google\Client\InitializationInterface;
+
 /**
- * Class for successful request
+ * Authorized token object
  * @author alxmsl
  * @date 2/4/13
  */ 
-final class TokenResponse {
+final class Token implements InitializationInterface {
     /**
      * Token type constants
      */
@@ -52,7 +54,7 @@ final class TokenResponse {
     /**
      * Setter for access token
      * @param string $accessToken access token
-     * @return TokenResponse self
+     * @return Token self
      */
     private function setAccessToken($accessToken) {
         $this->accessToken = (string) $accessToken;
@@ -70,7 +72,7 @@ final class TokenResponse {
     /**
      * Setter for access token expires in
      * @param int $expiresIn access token expires in
-     * @return TokenResponse self
+     * @return Token self
      */
     public function setExpiresIn($expiresIn) {
         $this->expiresIn = (int) $expiresIn;
@@ -88,7 +90,7 @@ final class TokenResponse {
     /**
      * Setter for id token
      * @param string $idToken id token
-     * @return TokenResponse self
+     * @return Token self
      */
     public function setIdToken($idToken) {
         $this->idToken = (string) $idToken;
@@ -106,7 +108,7 @@ final class TokenResponse {
     /**
      * Setter for refresh token
      * @param string $refreshToken refresh token
-     * @return TokenResponse self
+     * @return Token self
      */
     public function setRefreshToken($refreshToken) {
         $this->refreshToken = (string) $refreshToken;
@@ -128,7 +130,7 @@ final class TokenResponse {
     /**
      * Setter for token type
      * @param string $tokenType token type string
-     * @return TokenResponse self
+     * @return Token self
      */
     public function setTokenType($tokenType) {
         switch ($tokenType) {
@@ -168,7 +170,7 @@ final class TokenResponse {
     /**
      * Method for object initialization by the string
      * @param string $string response string
-     * @return TokenResponse response object
+     * @return Token response object
      */
     public static function initializeByString($string) {
         $object = json_decode($string);

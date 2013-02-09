@@ -2,12 +2,14 @@
 
 namespace Google\Client\OAuth2\Response;
 
+use \Google\Client\InitializationInterface;
+
 /**
  * Class for error response
  * @author alxmsl
  * @date 2/5/13
  */ 
-final class ErrorResponse {
+final class ErrorResponse implements InitializationInterface {
     /**
      * Error string constants
      */

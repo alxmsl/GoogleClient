@@ -26,5 +26,5 @@ $url = $Client->createAuthUrl(array(
 var_dump($url);
 
 // Get access token
-$Token = $Client->getAccessToken('4/E-sLNekvMUD99lYT39XYZBWRwGaK.UiZFTQZSjAYcsNf4jSFBMpaIucRNeQI');
+$Token = $Client->authorizeByCode('4/E-sLNekvMUD99lYT39XYZBWRwGaK.UiZFTQZSjAYcsNf4jSFBMpaIucRNeQI');
 var_dump($Token);
