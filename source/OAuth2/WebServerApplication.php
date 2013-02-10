@@ -87,7 +87,7 @@ class WebServerApplication extends Client {
     }
 
     /**
-     * Method for get access token by user authorization code
+     * Get access token by user authorization code
      * @param string $code user authorization code
      * @return Error|Token Google Api response object
      */
@@ -107,8 +107,23 @@ class WebServerApplication extends Client {
         }
     }
 
-    //TODO: Метод обновления токена доступа по токену обновления
+    /**
+     * Get access by refresh token
+     * @param string $refreshToken refresh token
+     * @return Response\Error|Response\Token Google Api response object
+     */
     public function refresh($refreshToken) {
-
+        $Request = $this->getRequest(self::ENDPOINT_ACCESS_TOKEN_REQUEST);
+        $Request->addPostField('client_id', $this->getClientId())
+            ->addPostField('client_secret', $this->getClientSecret())
+            ->addPostField('refresh_token', $refreshToken)
+            ->addPostField('grant_type', self::GRANT_TYPE_REFRESH);
+        try {
+            $Token = Token::initializeByString($Request->send());
+            $this->setToken($Token);
+            return $Token;
+        } catch (\Network\Http\HttpClientErrorCodeException $ex) {
+            return Error::initializeByString($ex->getMessage());
+        }
     }
 }

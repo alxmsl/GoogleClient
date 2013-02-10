@@ -31,3 +31,7 @@ const   CLIENT_CODE = '4/E-sLNekvMUD99lYT39XYZBWRwGaK.UiZFTQZSjAYcsNf4jSFBMpaIuc
 // Get access token
 $Token = $Client->authorizeByCode(CLIENT_CODE);
 var_dump($Token);
+
+//Refresh token
+$Refreshed = $Client->refresh($Token->getRefreshToken());
+var_dump($Refreshed);
