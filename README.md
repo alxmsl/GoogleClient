@@ -8,7 +8,7 @@ Installation
 
 For install library completely, you need to update submodules after checkout. For example:
 
-    git clone git@github.com:alxmsl/GoogleClient.git temp
+    git clone git://github.com/alxmsl/GoogleClient.git temp
     && cd temp
     && git submodule init
     && git submodule update
