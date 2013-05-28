@@ -2,7 +2,7 @@
 
 namespace Google\Client\GCM\Message;
 use Google\Client\GCM\Exportable;
-use Google\Client\GCM\GCMMessageFormatException;
+use Google\Client\GCM\GCMFormatException;
 
 /**
  * 
@@ -26,8 +26,11 @@ class PayloadMessage implements Exportable {
 
     private $restrictedPackageName = '';
 
-    private $dryRun = true;
+    private $dryRun = false;
 
+    /**
+     * @var null|PayloadData
+     */
     private $Data = null;
 
     /**
@@ -51,6 +54,11 @@ class PayloadMessage implements Exportable {
                 $this->registrationIds = (array) $registrationIds;
                 break;
         }
+
+        if (!is_null($this->getData())) {
+            $this->getData()->setType($this->getType());
+        }
+
         return $this;
     }
 
@@ -114,7 +122,7 @@ class PayloadMessage implements Exportable {
     }
 
     /**
-     * @param null|mixed $registrationIds
+     * @param null|array|string $registrationIds
      * @return PayloadMessage
      */
     public function setRegistrationIds($registrationIds) {
@@ -158,7 +166,7 @@ class PayloadMessage implements Exportable {
      */
     public function setData(PayloadData $Data) {
         $this->Data = $Data;
-        $this->Data
+        $this->Data->setType($this->getType());
         return $this;
     }
 

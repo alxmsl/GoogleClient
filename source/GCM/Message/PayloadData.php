@@ -38,7 +38,7 @@ abstract class PayloadData implements Exportable {
                 }
                 break;
             case PayloadMessage::TYPE_JSON:
-                $data = $this->getDataFields();
+                $data['data'] = $this->getDataFields();
         }
         return $data;
     }

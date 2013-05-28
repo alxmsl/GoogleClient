@@ -24,6 +24,12 @@ final class Autoloader {
         'Google\\Client\\Purchases\\Purchases'            => 'Purchases/Purchases.php',
         'Google\\Client\\Purchases\\Response\\Resource'   => 'Purchases/Response/Resource.php',
         'Google\\Client\\Purchases\\Response\\Error'      => 'Purchases/Response/Error.php',
+
+        'Google\\Client\\GCM\\Client' => 'GCM/Client.php',
+        'Google\\Client\\GCM\\Exportable' => 'GCM/Exportable.php',
+        'Google\\Client\\GCM\\Message\\PayloadData' => 'GCM/Message/PayloadData.php',
+        'Google\\Client\\GCM\\Message\\PayloadMessage' => 'GCM/Message/PayloadMessage.php',
+        'Google\\Client\\GCM\\Message\\SyncMessage' => 'GCM/Message/SyncMessage.php',
     );
 
     /**

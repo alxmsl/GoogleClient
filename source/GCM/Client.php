@@ -3,6 +3,8 @@
 namespace Google\Client\GCM;
 
 use Google\Client\GCM\Message\PayloadMessage;
+use Network\Http\HttpClientErrorCodeException;
+use Network\Http\HttpServerErrorCodeException;
 use \Network\Http\Request;
 
 /**
@@ -60,16 +62,25 @@ final class Client {
                 $this->getRequest()->addHeader('Content-Type', self::CONTENT_TYPE_JSON);
                 break;
             default:
-                throw new GCMMessageFormatException('unsupported message format code \'' . $Message->getType() . '\'');
+                throw new GCMFormatException('unsupported message format code \'' . $Message->getType() . '\'');
         }
         $this->getRequest()->setPostData($Message->export());
         try {
-            $this->getRequest()->send();
-        } catch () {
+            $Result = $this->getRequest()->send();
+            var_dump($Result);
+        } catch (HttpClientErrorCodeException $Ex) {
+            switch ($Ex->getCode()) {
+                case '400':
+                    throw new GCMFormatException('invalid JSON request with message \'' . $Ex->getMessage() . '\'');
+                case '401':
+                    throw new GCMUnauthorizedException('invalid authorization key \'' . $this->getAuthorizationKey() . '\'');
+            }
+        } catch (HttpServerErrorCodeException $Ex) {
 
         }
     }
 }
 
 class GCMException extends \Exception {}
-final class GCMMessageFormatException extends GCMException {}
+final class GCMFormatException extends GCMException {}
+final class GCMUnauthorizedException extends GCMException {}
