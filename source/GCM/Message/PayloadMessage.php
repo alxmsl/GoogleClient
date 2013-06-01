@@ -1,41 +1,67 @@
 <?php
 
 namespace Google\Client\GCM\Message;
+
 use Google\Client\GCM\Exportable;
 use Google\Client\GCM\GCMFormatException;
 
 /**
- * 
+ * Class for payload GCM message
  * @author alxmsl
  * @date 5/26/13
  */ 
 class PayloadMessage implements Exportable {
+    /**
+     * GCM messages content types constants
+     */
+    const   TYPE_PLAIN = 0,
+            TYPE_JSON = 1;
 
-    const TYPE_PLAIN = 0,
-        TYPE_JSON = 1;
-
+    /**
+     * Maximum registration ids for multicast messages
+     */
     const COUNT_REGISTRATION_IDS = 1000;
 
+    /**
+     * @var null|array|string registration id or ids
+     */
     private $registrationIds = null;
 
+    /**
+     * @var int content type code
+     */
     private $type = self::TYPE_PLAIN;
 
+    /**
+     * @var bool do not send message when device is idle
+     */
     private $delayWhileIdle = false;
 
+    /**
+     * @var int TTL for the message, seconds
+     */
     private $timeToLive = 0;
 
+    /**
+     * @var string package name for delivery registration ids limitation
+     */
     private $restrictedPackageName = '';
 
+    /**
+     * @var bool need dry run sending for the message
+     */
     private $dryRun = false;
 
     /**
-     * @var null|PayloadData
+     * @var null|PayloadData message payload data
      */
     private $Data = null;
 
     /**
-     * @param int $type
-     * @return PayloadMessage
+     * Content type code setter
+     * @param int $type content type code
+     * @return PayloadMessage self
+     * @throws GCMRegistrationIdsIncorrectForMessageType when registration ids array was empty
      */
     public function setType($type) {
         $registrationIds = $this->getRegistrationIds();
@@ -54,24 +80,24 @@ class PayloadMessage implements Exportable {
                 $this->registrationIds = (array) $registrationIds;
                 break;
         }
-
         if (!is_null($this->getData())) {
             $this->getData()->setType($this->getType());
         }
-
         return $this;
     }
 
     /**
-     * @return int
+     * Content type code getter
+     * @return int content type code
      */
     public function getType() {
         return $this->type;
     }
 
     /**
-     * @param int $delayWhileIdle
-     * @return PayloadMessage
+     * Set needing delay while idle
+     * @param bool $delayWhileIdle need delay while idle
+     * @return PayloadMessage self
      */
     public function setDelayWhileIdle($delayWhileIdle) {
         $this->delayWhileIdle = (bool) $delayWhileIdle;
@@ -79,15 +105,17 @@ class PayloadMessage implements Exportable {
     }
 
     /**
-     * @return int
+     * Need delay while idle or not
+     * @return bool need delay while idle or not
      */
     public function needDelayWhileIdle() {
         return $this->delayWhileIdle;
     }
 
     /**
-     * @param boolean $dryRun
-     * @return PayloadMessage
+     * Dry run message delivery setter
+     * @param boolean $dryRun need dry run message delivery or not
+     * @return PayloadMessage self
      */
     public function setDryRun($dryRun) {
         $this->dryRun = (bool) $dryRun;
@@ -95,15 +123,17 @@ class PayloadMessage implements Exportable {
     }
 
     /**
-     * @return boolean
+     * Dry run message delivery
+     * @return boolean dry run or not
      */
     public function isDryRun() {
         return $this->dryRun;
     }
 
     /**
-     * @param string $restrictedPackageName
-     * @return PayloadMessage
+     * Package name setter
+     * @param string $restrictedPackageName package name
+     * @return PayloadMessage self
      */
     public function setRestrictedPackageName($restrictedPackageName) {
         $this->restrictedPackageName = (string) $restrictedPackageName;
@@ -111,19 +141,25 @@ class PayloadMessage implements Exportable {
     }
 
     /**
-     * @return string
+     * Package name getter
+     * @return string package name
      */
     public function getRestrictedPackageName() {
         return $this->restrictedPackageName;
     }
 
+    /**
+     * Has set package name or not
+     * @return bool has package name or not
+     */
     public function hasRestrictedPackageName() {
         return !empty($this->restrictedPackageName);
     }
 
     /**
-     * @param null|array|string $registrationIds
-     * @return PayloadMessage
+     * Registration id or ids setter
+     * @param null|array|string $registrationIds registration id or ids
+     * @return PayloadMessage self
      */
     public function setRegistrationIds($registrationIds) {
         switch ($this->getType()) {
@@ -138,15 +174,17 @@ class PayloadMessage implements Exportable {
     }
 
     /**
-     * @return null|mixed
+     * Registration id or ids getter
+     * @return null|array|string registration id or ids for message delivery
      */
     public function getRegistrationIds() {
         return $this->registrationIds;
     }
 
     /**
-     * @param int $timeToLive
-     * @return PayloadMessage
+     * TTL setter
+     * @param int $timeToLive ttl value, seconds
+     * @return PayloadMessage self
      */
     public function setTimeToLive($timeToLive) {
         $this->timeToLive = (int) $timeToLive;
@@ -154,15 +192,17 @@ class PayloadMessage implements Exportable {
     }
 
     /**
-     * @return int
+     * TTL getter
+     * @return int ttl value
      */
     public function getTimeToLive() {
         return $this->timeToLive;
     }
 
     /**
-     * @param null $Data
-     * @return PayloadMessage
+     * Payload data setter
+     * @param PayloadData $Data payload data instance
+     * @return PayloadMessage self
      */
     public function setData(PayloadData $Data) {
         $this->Data = $Data;
@@ -171,12 +211,17 @@ class PayloadMessage implements Exportable {
     }
 
     /**
-     * @return null|Exportable
+     * Payload data getter
+     * @return null|PayloadData payload data
      */
     public function getData() {
         return $this->Data;
     }
 
+    /**
+     * Method for export instance data
+     * @return array exported data
+     */
     public function export() {
         $data = array();
         if ($this->getRegistrationIds()) {
@@ -204,5 +249,12 @@ class PayloadMessage implements Exportable {
     }
 }
 
+/**
+ * Base GCM exception for message
+ */
 class GCMMessageException extends \Exception {}
+
+/**
+ * Except when message have invalid registration ids count for set content type
+ */
 final class GCMRegistrationIdsIncorrectForMessageType extends GCMMessageException {}
