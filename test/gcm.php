@@ -32,4 +32,5 @@ $Client->getRequest()->setConnectTimeout(60);
 $Client->setAuthorizationKey('AIzaSyCudpfOv6m2hNysZAWhw5T0UmW7n_7liNY');
 
 // ...and send the message
-$Client->send($Message);
+$Response = $Client->send($Message);
+var_dump($Response);

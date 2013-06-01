@@ -26,6 +26,8 @@ final class Autoloader {
         'Google\\Client\\Purchases\\Response\\Error'      => 'Purchases/Response/Error.php',
 
         'Google\\Client\\GCM\\Client' => 'GCM/Client.php',
+        'Google\\Client\\GCM\\Response\\Response' => 'GCM/Response/Response.php',
+        'Google\\Client\\GCM\\Response\\Status' => 'GCM/Response/Status.php',
         'Google\\Client\\GCM\\Exportable' => 'GCM/Exportable.php',
         'Google\\Client\\GCM\\Message\\PayloadData' => 'GCM/Message/PayloadData.php',
         'Google\\Client\\GCM\\Message\\PayloadMessage' => 'GCM/Message/PayloadMessage.php',

@@ -3,6 +3,7 @@
 namespace Google\Client\GCM;
 
 use Google\Client\GCM\Message\PayloadMessage;
+use Google\Client\GCM\Response\Response;
 use Network\Http\HttpClientErrorCodeException;
 use Network\Http\HttpServerErrorCodeException;
 use \Network\Http\Request;
@@ -87,11 +88,10 @@ final class Client {
         }
         $this->getRequest()->setPostData($Message->export());
         try {
-            $Result = $this->getRequest()->send();
-
-            //todo: define response instance
-
-            var_dump($Result);
+            $result = $this->getRequest()->send();
+            var_dump($result);
+            Response::$type = $Message->getType();
+            return Response::initializeByString($result);
         } catch (HttpClientErrorCodeException $Ex) {
             switch ($Ex->getCode()) {
                 case '400':

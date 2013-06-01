@@ -24,4 +24,58 @@ final class Status {
     private $registrationId = '';
 
     private $error = '';
+
+    /**
+     * @param string $error
+     * @return Status
+     */
+    public function setError($error)
+    {
+        $this->error = $error;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getError()
+    {
+        return $this->error;
+    }
+
+    /**
+     * @param string $messageId
+     * @return Status
+     */
+    public function setMessageId($messageId)
+    {
+        $this->messageId = $messageId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessageId()
+    {
+        return $this->messageId;
+    }
+
+    /**
+     * @param string $registrationId
+     * @return Status
+     */
+    public function setRegistrationId($registrationId)
+    {
+        $this->registrationId = $registrationId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRegistrationId()
+    {
+        return $this->registrationId;
+    }
 }
