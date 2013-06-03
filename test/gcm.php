@@ -22,14 +22,14 @@ $Data = new NewPayloadData();
 
 // Create and initialize message instance
 $Message = new \Google\Client\GCM\Message\PayloadMessage();
-$Message->setRegistrationIds('APA91bHQHQQWD7a89wl2WZHYwBHvVl61zMiI5HMx3daZ9_S_5jK30U3q6BpAirUM7oa8bRQtT3yYF_BJt_aFAlt_CPbLoxQppE7sIiGJbWz9TrX0azVFLyO5QIW5VDkSLy63o6JQRn2-uiI3BD8Tx0GfwKYup6vOpg')
+$Message->setRegistrationIds('DeV1CeT0kEN')
     ->setType(\Google\Client\GCM\Message\PayloadMessage::TYPE_JSON)
     ->setData($Data);
 
 // Create GCM client
 $Client = new Google\Client\GCM\Client();
 $Client->getRequest()->setConnectTimeout(60);
-$Client->setAuthorizationKey('AIzaSyCudpfOv6m2hNysZAWhw5T0UmW7n_7liNY');
+$Client->setAuthorizationKey('aUTH0R1Z4t1oNKEy');
 
 // ...and send the message
 $Response = $Client->send($Message);

@@ -3,12 +3,14 @@
 namespace Google\Client\GCM\Response;
 
 /**
- * 
+ * Class for message delivery status
  * @author alxmsl
  * @date 5/28/13
  */ 
 final class Status {
-
+    /**
+     * Error constants
+     */
     const   STATUS_UNAVAILABLE          = 'Unavailable',
             STATUS_NOT_REGISTERED       = 'NotRegistered',
             STATUS_MISSING_REGISTRATION = 'MissingRegistration',
@@ -19,63 +21,97 @@ final class Status {
             STATUS_INVALID_TTL          = 'InvalidTtl',
             STATUS_INTERNAL_SERVER_ERROR = 'InternalServerError';
 
+    /**
+     * @var string message identifier
+     */
     private $messageId = '';
 
-    private $registrationId = '';
+    /**
+     * @var string canonical device identifier
+     */
+    private $canonicalId = '';
 
+    /**
+     * @var string error code
+     */
     private $error = '';
 
     /**
-     * @param string $error
-     * @return Status
+     * Error code setter
+     * @param string $error error code
+     * @return Status self
      */
-    public function setError($error)
-    {
-        $this->error = $error;
+    public function setError($error) {
+        $this->error = (string) $error;
         return $this;
     }
 
     /**
-     * @return string
+     * Error code getter
+     * @return string error code
      */
-    public function getError()
-    {
+    public function getError() {
         return $this->error;
     }
 
     /**
-     * @param string $messageId
-     * @return Status
+     * Message identifier setter
+     * @param string $messageId message identifier
+     * @return Status self
      */
-    public function setMessageId($messageId)
-    {
-        $this->messageId = $messageId;
+    public function setMessageId($messageId) {
+        $this->messageId = (string) $messageId;
         return $this;
     }
 
     /**
-     * @return string
+     * Message identifier getter
+     * @return string message identifier
      */
-    public function getMessageId()
-    {
+    public function getMessageId() {
         return $this->messageId;
     }
 
     /**
-     * @param string $registrationId
-     * @return Status
+     * Canonical identifier setter
+     * @param string $registrationId canonical identifier
+     * @return Status self
      */
-    public function setRegistrationId($registrationId)
-    {
-        $this->registrationId = $registrationId;
+    public function setCanonicalId($registrationId) {
+        $this->canonicalId = (string) $registrationId;
         return $this;
     }
 
     /**
-     * @return string
+     * Canonical identifier getter
+     * @return string canonical identifier
      */
-    public function getRegistrationId()
-    {
-        return $this->registrationId;
+    public function getCanonicalId() {
+        return $this->canonicalId;
+    }
+
+    /**
+     * Check status for new device registration identifier
+     * @return bool true when status has new device registration identifier
+     */
+    public function hasCanonicalId() {
+        return !empty($this->canonicalId);
+    }
+
+    /**
+     * Check status for need to remove device registration identifier
+     * @return bool true when need to remove device registration identifier
+     */
+    public function mustRemove() {
+        return $this->getError() == self::STATUS_NOT_REGISTERED;
+    }
+
+    /**
+     * Check status for can to retry message sending
+     * @return bool true when can to retry message sending
+     */
+    public function canRetry() {
+        return $this->getError() == self::STATUS_UNAVAILABLE
+            || $this->getError() == self::STATUS_INTERNAL_SERVER_ERROR;
     }
 }

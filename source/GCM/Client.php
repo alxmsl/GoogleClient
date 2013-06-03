@@ -6,7 +6,7 @@ use Google\Client\GCM\Message\PayloadMessage;
 use Google\Client\GCM\Response\Response;
 use Network\Http\HttpClientErrorCodeException;
 use Network\Http\HttpServerErrorCodeException;
-use \Network\Http\Request;
+use Network\Http\Request;
 
 /**
  * GCM sender client class
@@ -72,6 +72,8 @@ final class Client {
      * @param PayloadMessage $Message GCM message instance
      * @throws GCMFormatException when request or response format was incorrect
      * @throws GCMUnauthorizedException when was incorrect authorization key
+     * @throws GCMServerError when something wrong on the GCM server
+     * @throws GCMUnrecoverableError when GCM server is not available
      */
     public function send(PayloadMessage $Message) {
         switch ($Message->getType()) {
@@ -84,12 +86,11 @@ final class Client {
                 $this->getRequest()->addHeader('Content-Type', self::CONTENT_TYPE_JSON);
                 break;
             default:
-                throw new GCMFormatException('unsupported message format code \'' . $Message->getType() . '\'');
+                throw new GCMFormatException('unsupported request format code \'' . $Message->getType() . '\'');
         }
         $this->getRequest()->setPostData($Message->export());
         try {
             $result = $this->getRequest()->send();
-            var_dump($result);
             Response::$type = $Message->getType();
             return Response::initializeByString($result);
         } catch (HttpClientErrorCodeException $Ex) {
@@ -100,7 +101,13 @@ final class Client {
                     throw new GCMUnauthorizedException('invalid authorization key \'' . $this->getAuthorizationKey() . '\'');
             }
         } catch (HttpServerErrorCodeException $Ex) {
-
+            switch ($Ex->getCode()) {
+                case '500':
+                    throw new GCMUnrecoverableError('unrecoverable GCM server error');
+                default:
+                    $headers = $this->getRequest()->getResponseHeaders();
+                    throw new GCMServerError(@$headers['Retry-After']);
+            }
         }
     }
 }
@@ -119,3 +126,38 @@ final class GCMFormatException extends GCMException {}
  * Except when GCM request has incorrect authorization key
  */
 final class GCMUnauthorizedException extends GCMException {}
+
+/**
+ * Except when GCM server is not available
+ */
+final class GCMUnrecoverableError extends GCMException {}
+
+/**
+ * Except when something wrong on the GCM server
+ */
+final class GCMServerError extends GCMException {
+    /**
+     * @var int retry timeout
+     */
+    private $retryAfter = 0;
+
+    /**
+     * Retry timeout getter
+     * @return int retry timeout timestamp
+     */
+    public function getRetryAfter() {
+        return $this->retryAfter;
+    }
+
+    /**
+     * @param null|string $retryAfter retry after header value
+     * @param string $message exception message
+     * @param int $code exception error code
+     */
+    public function __construct($retryAfter = null, $message = '', $code = 0) {
+        if (!is_null($retryAfter)) {
+            $this->retryAfter = strtotime($retryAfter);
+        }
+        parent::__construct($message, $code);
+    }
+}
