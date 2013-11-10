@@ -33,9 +33,13 @@ $Client->setClientId(CLIENT_ID)
 if (is_null($code)) {
     // Create authorization url
     $url = $Client->createAuthUrl(array(
-        'https://www.googleapis.com/auth/userinfo.email',
-        'https://www.googleapis.com/auth/userinfo.profile',
-    ), '', \Google\Client\OAuth2\WebServerApplication::RESPONSE_TYPE_CODE, \Google\Client\OAuth2\WebServerApplication::ACCESS_TYPE_OFFLINE);
+            'https://www.googleapis.com/auth/userinfo.email',
+            'https://www.googleapis.com/auth/userinfo.profile',
+        ), ''
+        , \Google\Client\OAuth2\WebServerApplication::RESPONSE_TYPE_CODE
+        , \Google\Client\OAuth2\WebServerApplication::ACCESS_TYPE_OFFLINE
+        // Use FORCE to get new refresh token for offline access type
+        , \Google\Client\OAuth2\WebServerApplication::APPROVAL_PROMPT_FORCE);
     var_dump($url);
 } else {
     var_dump($code);
@@ -48,6 +52,13 @@ if (is_null($code)) {
         if (!$Token->isOnline()) {
             $Refreshed = $Client->refresh($Token->getRefreshToken());
             var_dump($Refreshed);
+        }
+
+        $revoked = $Client->revoke($Token->getAccessToken());
+        if ($revoked) {
+            var_dump('token ' . $Token->getAccessToken() . ' was revoke');
+        } else {
+            var_dump('error on revoke token ' . $Token->getAccessToken());
         }
     }
 }

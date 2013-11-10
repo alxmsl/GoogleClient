@@ -4,6 +4,7 @@ namespace Google\Client\OAuth2;
 
 use Google\Client\OAuth2\Response\Token,
     Google\Client\OAuth2\Response\Error;
+use Network\Http\HttpCodeException;
 
 /**
  * Class for login via web server applications
@@ -37,8 +38,9 @@ class WebServerApplication extends Client {
     /**
      * Google Api endpoints
      */
-    const   ENDPOINT_INITIAL_REQUEST = 'https://accounts.google.com/o/oauth2/auth',
-            ENDPOINT_ACCESS_TOKEN_REQUEST = 'https://accounts.google.com/o/oauth2/token';
+    const   ENDPOINT_INITIAL_REQUEST        = 'https://accounts.google.com/o/oauth2/auth',
+            ENDPOINT_ACCESS_TOKEN_REQUEST   = 'https://accounts.google.com/o/oauth2/token',
+            ENDPOINT_REVOKE_TOKEN           = 'https://accounts.google.com/o/oauth2/revoke';
 
     /**
      * @var \Google\Client\OAuth2\Response\Token access token
@@ -129,6 +131,23 @@ class WebServerApplication extends Client {
             return $Token;
         } catch (\Network\Http\HttpClientErrorCodeException $ex) {
             return Error::initializeByString($ex->getMessage());
+        }
+    }
+
+    /**
+     * Revoke access or refresh token
+     * If the token is an access token and it has a corresponding refresh token, the refersh token will also be revoked
+     * @param string $token user access or refresh token
+     * @return bool revoke token result
+     */
+    public function revoke($token) {
+        $Request = $this->getRequest(self::ENDPOINT_REVOKE_TOKEN);
+        $Request->addGetField('token', (string) $token);
+        try {
+            $Request->send();
+            return true;
+        } catch (HttpCodeException $Ex) {
+            return false;
         }
     }
 }
