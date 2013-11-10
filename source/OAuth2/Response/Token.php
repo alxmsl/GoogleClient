@@ -122,7 +122,7 @@ final class Token implements InitializationInterface {
      */
     public function getRefreshToken() {
         if ($this->isOnline()) {
-            throw new \OutOfBoundsException();
+            throw new \OutOfBoundsException('online tokens has not refresh tokens');
         }
         return $this->refreshToken;
     }

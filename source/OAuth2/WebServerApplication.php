@@ -79,10 +79,12 @@ class WebServerApplication extends Client {
             'client_id=' . $this->getClientId(),
             'redirect_uri=' . $this->getRedirectUri(),
             'scope=' . implode(' ', $scopes),
-            'state=' . $state,
             'access_type=' . $accessType,
             'approval_prompt=' . $approvalPrompt,
         );
+        if (!empty($state)) {
+            $parameters['state'] = $state;
+        }
         return self::ENDPOINT_INITIAL_REQUEST . '?' . implode('&', $parameters);
     }
 
