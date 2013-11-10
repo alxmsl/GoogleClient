@@ -13,34 +13,68 @@ For install library completely, you need to update submodules after checkout. Fo
     && git submodule init
     && git submodule update
 
-Authorization example
+Web Server Applications authorization example
 -------
 
-    include '../source/Autoloader.php';
-    include '../lib/Network/source/Autoloader.php';
+include '../source/Autoloader.php';
+include '../lib/Network/source/Autoloader.php';
 
-    // Define client identification
-    const   CLIENT_ID       = 'my client id',
-            CLIENT_SECRET   = 'my client secret code';
+// Define client identification
+const   CLIENT_ID       = 'my-client@id',
+        CLIENT_SECRET   = 'clientsecret';
 
-    // Create new webserver applications client
-    $Client = new \Google\Client\WebServerClient();
-    $Client->setClientId(CLIENT_ID)
-        ->setClientSecret(CLIENT_SECRET)
-        ->setRedirectUri('http://example.com/oauth2callback');
+$shortOptions = 'c::';
+$longOptions = array(
+    'code::',
+);
+$options = getopt($shortOptions, $longOptions);
+$code = null;
+if (isset($options['c'])) {
+    $code = $options['c'];
+} else if (isset($options['code'])) {
+    $code = $options['code'];
+}
 
+// Create new client
+$Client = new \Google\Client\OAuth2\WebServerApplication();
+$Client->setClientId(CLIENT_ID)
+    ->setClientSecret(CLIENT_SECRET)
+    ->setRedirectUri('http://example.com/oauth2callback');
+
+if (is_null($code)) {
     // Create authorization url
     $url = $Client->createAuthUrl(array(
-        'https://www.googleapis.com/auth/userinfo.email',
-        'https://www.googleapis.com/auth/userinfo.profile',
-    ), '', \Google\Client\Client::RESPONSE_TYPE_CODE, \Google\Client\Client::ACCESS_TYPE_OFFLINE);
+            'https://www.googleapis.com/auth/userinfo.email',
+            'https://www.googleapis.com/auth/userinfo.profile',
+        ), ''
+        , \Google\Client\OAuth2\WebServerApplication::RESPONSE_TYPE_CODE
+        , \Google\Client\OAuth2\WebServerApplication::ACCESS_TYPE_OFFLINE
+        // Use FORCE to get new refresh token for offline access type
+        , \Google\Client\OAuth2\WebServerApplication::APPROVAL_PROMPT_FORCE);
     var_dump($url);
-
+} else {
+    var_dump($code);
     // Get access token
-    $Token = $Client->getAccessToken('4/E-sLNekvMUD99lYT39XYZBWRwGaK.UiZFTQZSjAYcsNf4jSFBMpaIucRNeQI');
+    $Token = $Client->authorizeByCode($code);
     var_dump($Token);
 
-Subscriptions example
+    if ($Token instanceof \Google\Client\OAuth2\Response\Token) {
+        // Get refresh token
+        if (!$Token->isOnline()) {
+            $Refreshed = $Client->refresh($Token->getRefreshToken());
+            var_dump($Refreshed);
+        }
+
+        $revoked = $Client->revoke($Token->getAccessToken());
+        if ($revoked) {
+            var_dump('token ' . $Token->getAccessToken() . ' was revoke');
+        } else {
+            var_dump('error on revoke token ' . $Token->getAccessToken());
+        }
+    }
+}
+
+Subscriptions workflow example
 -------
 
     include '../source/Autoloader.php';
