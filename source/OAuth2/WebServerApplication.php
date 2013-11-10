@@ -73,7 +73,7 @@ class WebServerApplication extends Client {
      * @param string $approvalPrompt type of re-prompted user consent
      * @return string url string for user authorization
      */
-    public function createAuthUrl(array $scopes, $state = '', $responseType = self::RESPONSE_TYPE_CODE, $accessType = self::ACCESS_TYPE_ONLINE, $approvalPrompt = self::APPROVAL_PROMPT_AUTO) {
+    public function createAuthUrl(array $scopes, $state = '', $responseType = self::RESPONSE_TYPE_CODE, $accessType = self::ACCESS_TYPE_ONLINE, $approvalPrompt = self::APPROVAL_PROMPT_AUTO, $loginHint = '') {
         $parameters = array(
             'response_type=' . $responseType,
             'client_id=' . $this->getClientId(),
@@ -84,6 +84,9 @@ class WebServerApplication extends Client {
         );
         if (!empty($state)) {
             $parameters['state'] = $state;
+        }
+        if (!empty($loginHint)) {
+            $parameters['login_hint'] = $loginHint;
         }
         return self::ENDPOINT_INITIAL_REQUEST . '?' . implode('&', $parameters);
     }
