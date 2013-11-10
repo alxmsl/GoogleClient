@@ -77,8 +77,8 @@ class WebServerApplication extends Client {
         $parameters = array(
             'response_type=' . $responseType,
             'client_id=' . $this->getClientId(),
-            'redirect_uri=' . $this->getRedirectUri(),
-            'scope=' . implode(' ', $scopes),
+            'redirect_uri=' . urlencode($this->getRedirectUri()),
+            'scope=' . urlencode(implode(' ', $scopes)),
             'access_type=' . $accessType,
             'approval_prompt=' . $approvalPrompt,
         );
