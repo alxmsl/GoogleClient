@@ -1,6 +1,6 @@
 <?php
 /**
- *
+ * InApp consumable purchases verification
  * @author alxmsl
  * @date 1/24/13
  */

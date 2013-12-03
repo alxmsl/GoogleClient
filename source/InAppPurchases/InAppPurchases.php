@@ -41,10 +41,10 @@ final class InAppPurchases extends WebServerApplication {
     }
 
     /**
-     * Check user subscription
+     * Check InApp purchase
      * @param string $productId product identifier
-     * @param string $token subscription identifier
-     * @return Resource|Error user subscription data
+     * @param string $token InApp purchase token
+     * @return Resource|Error InApp purchase resource or error instance
      * @throws \UnexpectedValueException when access token not presented
      */
     public function get($productId, $token) {
