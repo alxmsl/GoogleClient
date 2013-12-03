@@ -31,6 +31,9 @@ final class Autoloader {
         'Google\\Client\\GCM\\Message\\PayloadData'     => 'GCM/Message/PayloadData.php',
         'Google\\Client\\GCM\\Message\\PayloadMessage'  => 'GCM/Message/PayloadMessage.php',
         'Google\\Client\\GCM\\Message\\SyncMessage'     => 'GCM/Message/SyncMessage.php',
+        'Google\\Client\\InAppPurchases\\InAppPurchases'     => 'InAppPurchases/InAppPurchases.php',
+        'Google\\Client\\InAppPurchases\\Response\\Resource' => 'InAppPurchases/Response/Resource.php',
+        'Google\\Client\\InAppPurchases\\Response\\Error'    => 'InAppPurchases/Response/Error.php',
     );
 
     /**
