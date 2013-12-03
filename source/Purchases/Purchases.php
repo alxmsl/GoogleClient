@@ -16,7 +16,7 @@ final class Purchases extends WebServerApplication {
     /**
      * Google Api Purchases endpoints
      */
-    const ENDPOINT_PURCHASES = 'https://www.googleapis.com/androidpublisher/v1';
+    const ENDPOINT_PURCHASES = 'https://www.googleapis.com/androidpublisher/v1.1';
 
     /**
      * @var string package name
