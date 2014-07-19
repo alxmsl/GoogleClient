@@ -1,9 +1,8 @@
 <?php
 
-namespace Google\Client\GCM\Message;
-
-use Google\Client\GCM\Exportable;
-use Google\Client\GCM\GCMFormatException;
+namespace alxmsl\Google\GCM\Message;
+use alxmsl\Google\GCM\Exception\GCMRegistrationIdsIncorrectForMessageType;
+use alxmsl\Google\GCM\Exportable;
 
 /**
  * Class for payload GCM message
@@ -14,8 +13,8 @@ class PayloadMessage implements Exportable {
     /**
      * GCM messages content types constants
      */
-    const   TYPE_PLAIN = 0,
-            TYPE_JSON = 1;
+    const TYPE_PLAIN = 0,
+          TYPE_JSON  = 1;
 
     /**
      * Maximum registration ids for multicast messages
@@ -248,13 +247,3 @@ class PayloadMessage implements Exportable {
         return $data;
     }
 }
-
-/**
- * Base GCM exception for message
- */
-class GCMMessageException extends \Exception {}
-
-/**
- * Except when message have invalid registration ids count for set content type
- */
-final class GCMRegistrationIdsIncorrectForMessageType extends GCMMessageException {}

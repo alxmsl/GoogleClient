@@ -1,7 +1,7 @@
 <?php
 
-namespace Google\Client\InAppPurchases\Response;
-use Google\Client\InitializationInterface;
+namespace alxmsl\Google\InAppPurchases\Response;
+use alxmsl\Google\InitializationInterface;
 
 /**
  * InApp consumable purchase resource class
@@ -12,16 +12,16 @@ final class Resource implements InitializationInterface {
     /**
      * Purchase state constants
      */
-    const   PURCHASE_STATE_UNKNOWN      = -1,
-            PURCHASE_STATE_PURCHASED    = 0,
-            PURCHASE_STATE_CANCELLED    = 1;
+    const PURCHASE_STATE_UNKNOWN   = -1,
+          PURCHASE_STATE_PURCHASED = 0,
+          PURCHASE_STATE_CANCELLED = 1;
 
     /**
      * Purchase consumption state constants
      */
-    const   CONSUMPTION_STATE_UNKNOWN           = -1,
-            CONSUMPTION_STATE_CONSUMED          = 0,
-            CONSUMPTION_STATE_TO_BE_CONSUMED    = 1;
+    const CONSUMPTION_STATE_UNKNOWN        = -1,
+          CONSUMPTION_STATE_CONSUMED       = 0,
+          CONSUMPTION_STATE_TO_BE_CONSUMED = 1;
 
     /**
      * @var string static kind string
@@ -48,9 +48,6 @@ final class Resource implements InitializationInterface {
      */
     private $developerPayload = '';
 
-    /**
-     * Instance public creation lock
-     */
     private function __construct() {}
 
     /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace Google\Client\OAuth2\Response;
-
-use \Google\Client\InitializationInterface;
+namespace alxmsl\Google\OAuth2\Response;
+use alxmsl\Google\InitializationInterface;
+use OutOfBoundsException;
 
 /**
  * Authorized token object
@@ -13,8 +13,8 @@ final class Token implements InitializationInterface {
     /**
      * Token type constants
      */
-    const   TYPE_UNKNOWN    = 0,
-            TYPE_BEARER     = 1;
+    const TYPE_UNKNOWN = 0,
+          TYPE_BEARER  = 1;
 
     /**
      * @var string access token
@@ -46,9 +46,6 @@ final class Token implements InitializationInterface {
      */
     private $online = false;
 
-    /**
-     * Lock for object creation
-     */
     private function __construct() {}
 
     /**
@@ -118,11 +115,11 @@ final class Token implements InitializationInterface {
     /**
      * Getter for refresh token
      * @return string refresh token
-     * @throws \OutOfBoundsException for online access tokens
+     * @throws OutOfBoundsException for online access tokens
      */
     public function getRefreshToken() {
         if ($this->isOnline()) {
-            throw new \OutOfBoundsException('online tokens has not refresh tokens');
+            throw new OutOfBoundsException('online tokens has not refresh tokens');
         }
         return $this->refreshToken;
     }
@@ -189,5 +186,4 @@ final class Token implements InitializationInterface {
         }
         return $Response;
     }
-
 }

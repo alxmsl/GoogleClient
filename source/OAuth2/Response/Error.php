@@ -1,8 +1,7 @@
 <?php
 
-namespace Google\Client\OAuth2\Response;
-
-use \Google\Client\InitializationInterface;
+namespace alxmsl\Google\OAuth2\Response;
+use alxmsl\Google\InitializationInterface;
 
 /**
  * Class for error response
@@ -13,8 +12,8 @@ final class Error implements InitializationInterface {
     /**
      * Error string constants
      */
-    const   STRING_INVALID_GRANT    = 'invalid_grant',
-            STRING_INVALID_CLIENT   = 'invalid_client';
+    const STRING_INVALID_GRANT  = 'invalid_grant',
+          STRING_INVALID_CLIENT = 'invalid_client';
 
     /**
      * @var string google error code
@@ -47,9 +46,6 @@ final class Error implements InitializationInterface {
         return $this->error == self::STRING_INVALID_CLIENT;
     }
 
-    /**
-     * Lock for object creation
-     */
     private function __construct() {}
 
     /**

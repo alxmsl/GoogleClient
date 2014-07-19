@@ -1,10 +1,10 @@
 <?php
 
-namespace Google\Client\OAuth2;
-
-use Google\Client\OAuth2\Response\Token,
-    Google\Client\OAuth2\Response\Error;
-use Network\Http\HttpCodeException;
+namespace alxmsl\Google\OAuth2;
+use alxmsl\Google\OAuth2\Response\Error;
+use alxmsl\Google\OAuth2\Response\Token;
+use alxmsl\Network\Http\HttpClientErrorCodeException;
+use alxmsl\Network\Http\HttpCodeException;
 
 /**
  * Class for login via web server applications
@@ -15,35 +15,35 @@ class WebServerApplication extends Client {
     /**
      * Response type constants
      */
-    const   RESPONSE_TYPE_CODE  = 'code';
+    const RESPONSE_TYPE_CODE = 'code';
 
     /**
      * Access type constants
      */
-    const   ACCESS_TYPE_ONLINE  = 'online',
-            ACCESS_TYPE_OFFLINE = 'offline';
+    const ACCESS_TYPE_ONLINE  = 'online',
+          ACCESS_TYPE_OFFLINE = 'offline';
 
     /**
      * Approval constants
      */
-    const   APPROVAL_PROMPT_AUTO    = 'auto',
-            APPROVAL_PROMPT_FORCE   = 'force';
+    const APPROVAL_PROMPT_AUTO  = 'auto',
+          APPROVAL_PROMPT_FORCE = 'force';
 
     /**
      * Grant type constants
      */
-    const   GRANT_TYPE_AUTHORIZATION    = 'authorization_code',
-            GRANT_TYPE_REFRESH          = 'refresh_token';
+    const GRANT_TYPE_AUTHORIZATION = 'authorization_code',
+          GRANT_TYPE_REFRESH       = 'refresh_token';
 
     /**
      * Google Api endpoints
      */
-    const   ENDPOINT_INITIAL_REQUEST        = 'https://accounts.google.com/o/oauth2/auth',
-            ENDPOINT_ACCESS_TOKEN_REQUEST   = 'https://accounts.google.com/o/oauth2/token',
-            ENDPOINT_REVOKE_TOKEN           = 'https://accounts.google.com/o/oauth2/revoke';
+    const ENDPOINT_INITIAL_REQUEST      = 'https://accounts.google.com/o/oauth2/auth',
+          ENDPOINT_ACCESS_TOKEN_REQUEST = 'https://accounts.google.com/o/oauth2/token',
+          ENDPOINT_REVOKE_TOKEN         = 'https://accounts.google.com/o/oauth2/revoke';
 
     /**
-     * @var \Google\Client\OAuth2\Response\Token access token
+     * @var Token access token
      */
     private $Token = null;
 
@@ -109,7 +109,7 @@ class WebServerApplication extends Client {
             $Token = Token::initializeByString($Request->send());
             $this->setToken($Token);
             return $Token;
-        } catch (\Network\Http\HttpClientErrorCodeException $ex) {
+        } catch (HttpClientErrorCodeException $ex) {
             return Error::initializeByString($ex->getMessage());
         }
     }
@@ -117,7 +117,7 @@ class WebServerApplication extends Client {
     /**
      * Get access by refresh token
      * @param string $refreshToken refresh token
-     * @return Response\Error|Response\Token Google Api response object
+     * @return Error|Token Google Api response object
      */
     public function refresh($refreshToken) {
         $Request = $this->getRequest(self::ENDPOINT_ACCESS_TOKEN_REQUEST);
@@ -129,14 +129,14 @@ class WebServerApplication extends Client {
             $Token = Token::initializeByString($Request->send());
             $this->setToken($Token);
             return $Token;
-        } catch (\Network\Http\HttpClientErrorCodeException $ex) {
+        } catch (HttpClientErrorCodeException $ex) {
             return Error::initializeByString($ex->getMessage());
         }
     }
 
     /**
      * Revoke access or refresh token
-     * If the token is an access token and it has a corresponding refresh token, the refersh token will also be revoked
+     * If the token is an access token and it has a corresponding refresh token, the refresh token will also be revoked
      * @param string $token user access or refresh token
      * @return bool revoke token result
      */

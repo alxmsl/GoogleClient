@@ -1,8 +1,7 @@
 <?php
 
-namespace Google\Client\GCM\Message;
-
-use Google\Client\GCM\Exportable;
+namespace alxmsl\Google\GCM\Message;
+use alxmsl\Google\GCM\Exportable;
 
 /**
  * Abstract payload data

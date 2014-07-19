@@ -1,8 +1,8 @@
 <?php
 
-namespace Google\Client\Purchases\Response;
-
-use \Google\Client\InitializationInterface;
+namespace alxmsl\Google\Purchases\Response;
+use alxmsl\Google\InitializationInterface;
+use stdClass;
 
 /**
  * Purchases Api error
@@ -21,7 +21,7 @@ final class Error implements InitializationInterface {
     private $message = '';
 
     /**
-     * @var \stdClass[] errors
+     * @var stdClass[] errors
      */
     private $errors = array();
 
@@ -55,7 +55,7 @@ final class Error implements InitializationInterface {
 
     /**
      * Getter for errors
-     * @return \stdClass[] errors
+     * @return stdClass[] errors
      */
     public function getErrors() {
         return $this->errors;

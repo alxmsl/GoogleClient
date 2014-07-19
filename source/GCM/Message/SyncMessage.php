@@ -1,6 +1,6 @@
 <?php
 
-namespace Google\Client\GCM\Message;
+namespace alxmsl\Google\GCM\Message;
 
 /**
  * Class for send-to-sync GCM message

@@ -1,6 +1,6 @@
 <?php
 
-namespace Google\Client\GCM;
+namespace alxmsl\Google\GCM;
 
 /**
  * Interface for exportable objects

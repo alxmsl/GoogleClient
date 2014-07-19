@@ -1,6 +1,6 @@
 <?php
 
-namespace Google\Client;
+namespace alxmsl\Google;
 
 /**
  * Interface for self-initialization objects

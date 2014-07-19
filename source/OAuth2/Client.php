@@ -1,9 +1,7 @@
 <?php
 
-namespace Google\Client\OAuth2;
-
-use \Network\Http\Request,
-    \Google\Client\OAuth2\Response\Token;
+namespace alxmsl\Google\OAuth2;
+use alxmsl\Network\Http\Request;
 
 /**
  * Abstract Google client class

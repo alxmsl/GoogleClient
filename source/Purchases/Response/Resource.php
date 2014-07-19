@@ -1,8 +1,7 @@
 <?php
 
-namespace Google\Client\Purchases\Response;
-
-use \Google\Client\InitializationInterface;
+namespace alxmsl\Google\Purchases\Response;
+use alxmsl\Google\InitializationInterface;
 
 /**
  * User subscription resource
@@ -36,7 +35,7 @@ final class Resource implements InitializationInterface {
      * @return Resource self
      */
     private function setAutoRenew($autoRenew) {
-        $this->autoRenew = !!$autoRenew;
+        $this->autoRenew = (bool) $autoRenew;
         return $this;
     }
 
@@ -109,11 +108,11 @@ final class Resource implements InitializationInterface {
      */
     public static function initializeByString($string) {
         $object = json_decode($string);
-        $Resource = new self();
-        $Resource->setKind($object->kind)
-            ->setInitiationTime($object->initiationTimestampMsec)
-            ->setValidUntilTime($object->validUntilTimestampMsec)
-            ->setAutoRenew($object->autoRenewing);
+        $Resource = new Resource();
+        $Resource->setKind($object->kind);
+        $Resource->setInitiationTime($object->initiationTimestampMsec);
+        $Resource->setValidUntilTime($object->validUntilTimestampMsec);
+        $Resource->setAutoRenew($object->autoRenewing);
         return $Resource;
     }
 }

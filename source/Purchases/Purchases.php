@@ -1,11 +1,11 @@
 <?php
 
-namespace Google\Client\Purchases;
-
-use \Google\Client\OAuth2\WebServerApplication,
-    \Google\Client\Purchases\Response\Resource,
-    Google\Client\Purchases\Response\Error,
-    \Network\Http\Request;
+namespace alxmsl\Google\Purchases;
+use alxmsl\Google\OAuth2\WebServerApplication;
+use alxmsl\Google\Purchases\Response\Error;
+use alxmsl\Google\Purchases\Response\Resource;
+use alxmsl\Network\Http\HttpClientErrorCodeException;
+use UnexpectedValueException;
 
 /**
  * Class for support Google Purchases Api
@@ -46,7 +46,7 @@ final class Purchases extends WebServerApplication {
      * @param string $productId product identifier
      * @param string $subscriptionId subscription identifier
      * @return Resource|Error user subscription data
-     * @throws \UnexpectedValueException when access token not presented
+     * @throws UnexpectedValueException when access token not presented
      */
     public function get($productId, $subscriptionId) {
         $accessToken = $this->getAccessToken();
@@ -58,7 +58,7 @@ final class Purchases extends WebServerApplication {
                 ->addGetField('access_token', $accessToken);
             try {
                 return Resource::initializeByString($Request->send());
-            } catch (\Network\Http\HttpClientErrorCodeException $ex) {
+            } catch (HttpClientErrorCodeException $ex) {
                 switch ($ex->getCode()) {
                     case 400:
                     case 401:
@@ -72,7 +72,7 @@ final class Purchases extends WebServerApplication {
                     default:
                         throw $ex;
                 }
-            } catch (\Network\Http\HttpServerErrorCodeException $ex) {
+            } catch (HttpServerErrorCodeException $ex) {
                 switch ($ex->getCode()) {
                     case 500:
                         return Error::initializeByString($ex->getMessage());
@@ -81,7 +81,7 @@ final class Purchases extends WebServerApplication {
                 }
             }
         } else {
-            throw new \UnexpectedValueException();
+            throw new UnexpectedValueException();
         }
     }
 
@@ -90,7 +90,7 @@ final class Purchases extends WebServerApplication {
      * @param string $productId product identifier
      * @param string $subscriptionId subscription identifier
      * @return bool|Error user subscription cancellation result
-     * @throws \UnexpectedValueException when access token not presented
+     * @throws UnexpectedValueException when access token not presented
      */
     public function cancel($productId, $subscriptionId) {
         $accessToken = $this->getAccessToken();
@@ -104,11 +104,11 @@ final class Purchases extends WebServerApplication {
             $Request->setMethod(Request::METHOD_POST);
             try {
                 return $Request->send() === '';
-            } catch (\Network\Http\HttpClientErrorCodeException $ex) {
+            } catch (HttpClientErrorCodeException $ex) {
                 return Error::initializeByString($ex->getMessage());
             }
         } else {
-            throw new \UnexpectedValueException();
+            throw new UnexpectedValueException();
         }
     }
 }

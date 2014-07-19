@@ -1,10 +1,9 @@
 <?php
 
-namespace Google\Client\GCM\Response;
-
-use Google\Client\GCM\GCMFormatException;
-use Google\Client\GCM\Message\PayloadMessage;
-use Google\Client\InitializationInterface;
+namespace alxmsl\Google\GCM\Response;
+use alxmsl\Google\GCM\Exception\GCMFormatException;
+use alxmsl\Google\GCM\Message\PayloadMessage;
+use alxmsl\Google\InitializationInterface;
 
 /**
  * GCM message sending response class
@@ -116,7 +115,7 @@ final class Response implements InitializationInterface {
 
     /**
      * Result statuses getter
-     * @return \Google\Client\GCM\Response\Status[] result statuses
+     * @return Status[] result statuses
      */
     public function getResults() {
         return $this->results;
@@ -126,7 +125,7 @@ final class Response implements InitializationInterface {
      * Initialization method
      * @param string $string data for object initialization
      * @return InitializationInterface initialized object
-     * @throws \Google\Client\GCM\GCMFormatException for unknown response format
+     * @throws GCMFormatException for unknown response format
      */
     public static function initializeByString($string) {
         switch (self::$type) {
@@ -143,7 +142,7 @@ final class Response implements InitializationInterface {
      * Create response object by plain text data
      * @param string $string plain text data
      * @return Response self
-     * @throws \Google\Client\GCM\GCMFormatException when plain text data format was not supported
+     * @throws GCMFormatException when plain text data format was not supported
      */
     private static function createPlainResponse($string) {
         $parts = explode("\n", $string);

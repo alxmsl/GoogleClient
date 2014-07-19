@@ -1,0 +1,22 @@
+{
+    "name": "alxmsl/googleclient",
+    "description": "Google services API library",
+    "keywords": [],
+    "license": "WTFPL",
+    "authors": [
+        {
+            "name": "alxmsl",
+            "email": "alexey.y.maslov@gmail.com"
+        }
+    ],
+    "support": {
+        "email": "alexey.y.maslov@gmail.com",
+        "issues": "https://github.com/alxmsl/GoogleClient/issues"
+    },
+    "autoload": {
+        "psr-4": {"alxmsl\\Google\\": "source/"}
+    },
+    "require":{
+        "alxmsl/network": ">=1.0.1"
+    }
+}

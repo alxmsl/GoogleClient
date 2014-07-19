@@ -6,15 +6,17 @@
  */
 
 include '../source/Autoloader.php';
-include '../lib/Network/source/Autoloader.php';
+include '../vendor/alxmsl/network/source/Autoloader.php';
+
+use alxmsl\Google\Purchases\Purchases;
 
 // Define client identification
 const   ACCESS_TOKEN = 'access token',
         PACKAGE_NAME = 'com.some.thing';
 
-$Client = new \Google\Client\Purchases\Purchases();
-$Client->setAccessToken(ACCESS_TOKEN)
-    ->setPackage(PACKAGE_NAME);
+$Client = new Purchases();
+$Client->setPackage(PACKAGE_NAME)
+    ->setAccessToken(ACCESS_TOKEN);
 
 // Get user subscription data
 $Subscription = $Client->get('some.thing.subscription.1', 'subscription token');

@@ -6,12 +6,14 @@
  */
 
 include '../source/Autoloader.php';
-include '../lib/Network/source/Autoloader.php';
+include '../vendor/alxmsl/network/source/Autoloader.php';
+
+use alxmsl\Google\InAppPurchases\InAppPurchases;
 
 // Check subscription
-const   PACKAGE_NAME    = 'com.myapp',
-        PRODUCT         = 'myapp.product.1',
-        INAPP           = 'my inapp token';
+const PACKAGE_NAME = 'com.myapp',
+      PRODUCT      = 'myapp.product.1',
+      INAPP        = 'my inapp token';
 
 $shortOptions = 't::';
 $longOptions = array(
@@ -26,7 +28,7 @@ if (isset($options['t'])) {
 }
 
 if (!is_null($token)) {
-    $Purchases = new \Google\Client\InAppPurchases\InAppPurchases();
+    $Purchases = new InAppPurchases();
     $Purchases->setPackage(PACKAGE_NAME)
         ->setAccessToken($token);
     $Resource = $Purchases->get(PRODUCT, INAPP);

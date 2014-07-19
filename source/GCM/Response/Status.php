@@ -1,6 +1,6 @@
 <?php
 
-namespace Google\Client\GCM\Response;
+namespace alxmsl\Google\GCM\Response;
 
 /**
  * Class for message delivery status
@@ -11,15 +11,15 @@ final class Status {
     /**
      * Error constants
      */
-    const   STATUS_UNAVAILABLE          = 'Unavailable',
-            STATUS_NOT_REGISTERED       = 'NotRegistered',
-            STATUS_MISSING_REGISTRATION = 'MissingRegistration',
-            STATUS_INVALID_REGISTRATION = 'InvalidRegistration',
-            STATUS_MISMATCH_SENDER_ID   = 'MismatchSenderId',
-            STATUS_MESSAGE_TOO_BIG      = 'MessageTooBig',
-            STATUS_INVALID_DATA_KEY     = 'InvalidDataKey',
-            STATUS_INVALID_TTL          = 'InvalidTtl',
-            STATUS_INTERNAL_SERVER_ERROR = 'InternalServerError';
+    const STATUS_UNAVAILABLE           = 'Unavailable',
+          STATUS_NOT_REGISTERED        = 'NotRegistered',
+          STATUS_MISSING_REGISTRATION  = 'MissingRegistration',
+          STATUS_INVALID_REGISTRATION  = 'InvalidRegistration',
+          STATUS_MISMATCH_SENDER_ID    = 'MismatchSenderId',
+          STATUS_MESSAGE_TOO_BIG       = 'MessageTooBig',
+          STATUS_INVALID_DATA_KEY      = 'InvalidDataKey',
+          STATUS_INVALID_TTL           = 'InvalidTtl',
+          STATUS_INTERNAL_SERVER_ERROR = 'InternalServerError';
 
     /**
      * @var string message identifier

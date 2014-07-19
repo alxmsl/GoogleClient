@@ -6,11 +6,14 @@
  */
 
 include '../source/Autoloader.php';
-include '../lib/Network/source/Autoloader.php';
+include '../vendor/alxmsl/network/source/Autoloader.php';
+
+use alxmsl\Google\OAuth2\Response\Token;
+use alxmsl\Google\OAuth2\WebServerApplication;
 
 // Define client identification
-const   CLIENT_ID       = 'my-client@id',
-        CLIENT_SECRET   = 'clientsecret';
+const CLIENT_ID       = 'my-client@id',
+      CLIENT_SECRET   = 'clientsecret';
 
 $shortOptions = 'c::';
 $longOptions = array(
@@ -25,7 +28,7 @@ if (isset($options['c'])) {
 }
 
 // Create new client
-$Client = new \Google\Client\OAuth2\WebServerApplication();
+$Client = new WebServerApplication();
 $Client->setClientId(CLIENT_ID)
     ->setClientSecret(CLIENT_SECRET)
     ->setRedirectUri('http://example.com/oauth2callback');
@@ -36,10 +39,10 @@ if (is_null($code)) {
             'https://www.googleapis.com/auth/userinfo.email',
             'https://www.googleapis.com/auth/userinfo.profile',
         ), ''
-        , \Google\Client\OAuth2\WebServerApplication::RESPONSE_TYPE_CODE
-        , \Google\Client\OAuth2\WebServerApplication::ACCESS_TYPE_OFFLINE
+        , WebServerApplication::RESPONSE_TYPE_CODE
+        , WebServerApplication::ACCESS_TYPE_OFFLINE
         // Use FORCE to get new refresh token for offline access type
-        , \Google\Client\OAuth2\WebServerApplication::APPROVAL_PROMPT_FORCE);
+        , WebServerApplication::APPROVAL_PROMPT_FORCE);
     var_dump($url);
 } else {
     var_dump($code);
@@ -47,7 +50,7 @@ if (is_null($code)) {
     $Token = $Client->authorizeByCode($code);
     var_dump($Token);
 
-    if ($Token instanceof \Google\Client\OAuth2\Response\Token) {
+    if ($Token instanceof Token) {
         // Get refresh token
         if (!$Token->isOnline()) {
             $Refreshed = $Client->refresh($Token->getRefreshToken());

@@ -1,10 +1,12 @@
 <?php
 
-namespace Google\Client\InAppPurchases;
-
-use Google\Client\InAppPurchases\Response\Error;
-use Google\Client\InAppPurchases\Response\Resource;
-use Google\Client\OAuth2\WebServerApplication;
+namespace alxmsl\Google\InAppPurchases;
+use alxmsl\Google\InAppPurchases\Response\Error;
+use alxmsl\Google\InAppPurchases\Response\Resource;
+use alxmsl\Google\OAuth2\WebServerApplication;
+use alxmsl\Network\Http\HttpClientErrorCodeException;
+use alxmsl\Network\Http\HttpServerErrorCodeException;
+use UnexpectedValueException;
 
 /**
  * Class for support Google InApp Purchases API
@@ -45,7 +47,7 @@ final class InAppPurchases extends WebServerApplication {
      * @param string $productId product identifier
      * @param string $token InApp purchase token
      * @return Resource|Error InApp purchase resource or error instance
-     * @throws \UnexpectedValueException when access token not presented
+     * @throws UnexpectedValueException when access token not presented
      */
     public function get($productId, $token) {
         $accessToken = $this->getAccessToken();
@@ -57,7 +59,7 @@ final class InAppPurchases extends WebServerApplication {
                 ->addGetField('access_token', $accessToken);
             try {
                 return Resource::initializeByString($Request->send());
-            } catch (\Network\Http\HttpClientErrorCodeException $ex) {
+            } catch (HttpClientErrorCodeException $ex) {
                 switch ($ex->getCode()) {
                     case 400:
                     case 401:
@@ -71,7 +73,7 @@ final class InAppPurchases extends WebServerApplication {
                     default:
                         throw $ex;
                 }
-            } catch (\Network\Http\HttpServerErrorCodeException $ex) {
+            } catch (HttpServerErrorCodeException $ex) {
                 switch ($ex->getCode()) {
                     case 500:
                         return Error::initializeByString($ex->getMessage());
@@ -80,7 +82,7 @@ final class InAppPurchases extends WebServerApplication {
                 }
             }
         } else {
-            throw new \UnexpectedValueException('access token is empty');
+            throw new UnexpectedValueException('access token is empty');
         }
     }
 }
