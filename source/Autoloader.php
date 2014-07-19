@@ -25,7 +25,7 @@ final class Autoloader {
         'alxmsl\\Google\\Autoloader'                    => 'Autoloader.php',
         'alxmsl\\Google\\InitializationInterface'       => 'InitializationInterface.php',
 
-        'alxmsl\\Google\\OAuth2'                        => 'OAuth2/Client.php',
+        'alxmsl\\Google\\OAuth2\\Client'                => 'OAuth2/Client.php',
         'alxmsl\\Google\\OAuth2\\WebServerApplication'  => 'OAuth2/WebServerApplication.php',
         'alxmsl\\Google\\OAuth2\\Response\\Token'       => 'OAuth2/Response/Token.php',
         'alxmsl\\Google\\OAuth2\\Response\\Error'       => 'OAuth2/Response/Error.php',
