@@ -1,17 +1,18 @@
 GoogleClient
 ============
 
-Google OAuth2.0 authorization library
+Google services API library
 
 Installation
 -------
 
-For install library completely, you need to update submodules after checkout. For example:
+For install library you need to modify your composer configuration file
 
-    git clone git://github.com/alxmsl/GoogleClient.git temp
-    && cd temp
-    && git submodule init
-    && git submodule update
+    "alxmsl/network": "v1.0.1"
+
+And just run installation command
+
+    composer.phar install
 
 Web Server Applications authorization example
 -------
@@ -156,3 +157,10 @@ Subscriptions workflow example
     // Check subscription by refreshed token
     $Subscription = $Purchases->get(PRODUCT, SUBSCRIPTION);
     var_dump($Subscription);
+
+License
+-------
+Copyright © 2014 Alexey Maslov <alexey.y.maslov@gmail.com>
+This work is free. You can redistribute it and/or modify it under the
+terms of the Do What The Fuck You Want To Public License, Version 2,
+as published by Sam Hocevar. See the COPYING file for more details.
