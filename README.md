@@ -8,7 +8,7 @@ Installation
 
 For install library you need to modify your composer configuration file
 
-    "alxmsl/network": "v1.0.1"
+    "alxmsl/googleclient": "v1.1.*"
 
 And just run installation command
 
@@ -161,6 +161,36 @@ Subscriptions workflow example
     $Purchases->setAccessToken($RefreshedToken->getAccessToken());
     $Subscription = $Purchases->get(PRODUCT, SUBSCRIPTION);
     var_dump($Subscription);
+
+GCM notification example
+-------
+
+    final class NewPayloadData extends PayloadData {
+        protected function getDataFields() {
+            return array(
+                'test' => 'test_01',
+            );
+        }
+    }
+    
+    // Create payload instance
+    $Data = new NewPayloadData();
+    
+    // Create and initialize message instance
+    $Message = new PayloadMessage();
+    $Message->setRegistrationIds('DeV1CeT0kEN')
+        ->setType(PayloadMessage::TYPE_JSON)
+        ->setData($Data);
+    
+    // Create GCM client
+    $Client = new Client();
+    $Client->getRequest()->setConnectTimeout(60)
+        ->setSslVersion(6); // @see CURLOPT_SSLVERSION
+    $Client->setAuthorizationKey('aUTH0R1Z4t1oNKEy');
+    
+    // ...and send the message
+    $Response = $Client->send($Message);
+    var_dump($Response);
 
 License
 -------
