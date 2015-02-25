@@ -10,8 +10,8 @@
 namespace alxmsl\Google\OAuth2;
 use alxmsl\Google\OAuth2\Response\Error;
 use alxmsl\Google\OAuth2\Response\Token;
-use alxmsl\Network\Http\HttpClientErrorCodeException;
-use alxmsl\Network\Http\HttpCodeException;
+use alxmsl\Network\Exception\HttpClientErrorCodeException;
+use alxmsl\Network\Exception\HttpCodeException;
 
 /**
  * Class for login via web server applications

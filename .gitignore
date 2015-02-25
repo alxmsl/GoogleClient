@@ -1,4 +1,4 @@
 .idea/
-examples/*.prod.php
+/examples/*.prod.php
 vendor/
 composer.lock

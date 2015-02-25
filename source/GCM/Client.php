@@ -14,8 +14,8 @@ use alxmsl\Google\GCM\Exception\GCMUnauthorizedException;
 use alxmsl\Google\GCM\Exception\GCMUnrecoverableError;
 use alxmsl\Google\GCM\Message\PayloadMessage;
 use alxmsl\Google\GCM\Response\Response;
-use alxmsl\Network\Http\HttpClientErrorCodeException;
-use alxmsl\Network\Http\HttpServerErrorCodeException;
+use alxmsl\Network\Exception\HttpClientErrorCodeException;
+use alxmsl\Network\Exception\HttpServerErrorCodeException;
 use alxmsl\Network\Http\Request;
 
 /**

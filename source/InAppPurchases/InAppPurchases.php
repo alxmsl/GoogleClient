@@ -11,8 +11,8 @@ namespace alxmsl\Google\InAppPurchases;
 use alxmsl\Google\InAppPurchases\Response\Error;
 use alxmsl\Google\InAppPurchases\Response\Resource;
 use alxmsl\Google\OAuth2\WebServerApplication;
-use alxmsl\Network\Http\HttpClientErrorCodeException;
-use alxmsl\Network\Http\HttpServerErrorCodeException;
+use alxmsl\Network\Exception\HttpClientErrorCodeException;
+use alxmsl\Network\Exception\HttpServerErrorCodeException;
 use UnexpectedValueException;
 
 /**

@@ -34,6 +34,7 @@ $url = $Client->createAuthUrl(array('https://www.googleapis.com/auth/androidpubl
     , WebServerApplication::RESPONSE_TYPE_CODE
     , WebServerApplication::ACCESS_TYPE_OFFLINE);
 echo $url . "\n";
+die;
 
 // Get client authorization code by following authorization url
 const CLIENT_CODE = 'authorization code';
