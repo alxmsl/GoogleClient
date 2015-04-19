@@ -9,6 +9,7 @@
 
 namespace alxmsl\Google\AndroidPublisher\Purchases\Products;
 use alxmsl\Google\AndroidPublisher\Purchases\Exception\ErrorException;
+use alxmsl\Google\AndroidPublisher\Purchases\Exception\InvalidCredentialsException;
 use alxmsl\Google\OAuth2\WebServerApplication;
 use alxmsl\Network\Exception\HttpClientErrorCodeException;
 use alxmsl\Network\Exception\HttpServerErrorCodeException;
@@ -64,7 +65,12 @@ final class Client extends WebServerApplication {
             try {
                 return Resource::initializeByString($Request->send());
             } catch (HttpClientErrorCodeException $Ex) {
-                throw ErrorException::initializeByString($Ex->getMessage());
+                switch ($Ex->getCode()) {
+                    case 401:
+                        throw InvalidCredentialsException::initializeByString($Ex->getMessage());
+                    default:
+                        throw ErrorException::initializeByString($Ex->getMessage());
+                }
             } catch (HttpServerErrorCodeException $Ex) {
                 throw ErrorException::initializeByString($Ex->getMessage());
             }

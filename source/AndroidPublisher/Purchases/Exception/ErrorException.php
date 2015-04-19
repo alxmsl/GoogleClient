@@ -16,7 +16,7 @@ use stdClass;
  * Class for AndroidPublisher API errors
  * @author alxmsl
  */
-final class ErrorException extends Exception implements InitializationInterface {
+class ErrorException extends Exception implements InitializationInterface {
     /**
      * @var stdClass[] error objects
      */
@@ -34,7 +34,7 @@ final class ErrorException extends Exception implements InitializationInterface 
      */
     public static function initializeByString($string) {
         $Object         = json_decode($string);
-        $ErrorException = new ErrorException($Object->error->message, $Object->error->code);
+        $ErrorException = new static($Object->error->message, $Object->error->code);
         $ErrorException->errors = (array) $Object->error->errors;
         return $ErrorException;
     }
