@@ -27,8 +27,8 @@ final class Resource implements InitializationInterface {
      * Purchase consumption state constants
      */
     const CONSUMPTION_STATE_UNKNOWN        = -1,
-          CONSUMPTION_STATE_CONSUMED       = 0,
-          CONSUMPTION_STATE_TO_BE_CONSUMED = 1;
+          CONSUMPTION_STATE_TO_BE_CONSUMED = 0,
+          CONSUMPTION_STATE_CONSUMED       = 1;
 
     /**
      * @var string static kind string
@@ -158,5 +158,42 @@ final class Resource implements InitializationInterface {
         $Resource->setKind($object->kind);
         return $Resource;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function __toString() {
+        $consumptionState = 'unknown';
+        switch ($this->getConsumptionState()) {
+            case self::CONSUMPTION_STATE_CONSUMED:
+                $consumptionState = 'consumed';
+                break;
+            case self::CONSUMPTION_STATE_TO_BE_CONSUMED:
+                $consumptionState = 'yet to be consumed';
+                break;
+        }
+        $purchaseState = 'unknown';
+        switch ($this->getPurchaseState()) {
+            case self::PURCHASE_STATE_CANCELLED:
+                $purchaseState = 'cancelled';
+                break;
+            case self::PURCHASE_STATE_PURCHASED:
+                $purchaseState = 'purchase';
+                break;
+        }
+
+        $format = <<<'EOD'
+    consumptionState:   %s
+    developerPayload:   %s
+    kind:               %s
+    purchaseState:      %s
+    purchaseTimeMillis: %s
+EOD;
+        return sprintf($format
+            , $consumptionState
+            , $this->getDeveloperPayload()
+            , $this->getKind()
+            , $purchaseState
+            , date('Y-m-d H:i:s', $this->getPurchaseTime() / 1000));
+    }
 }
- 
