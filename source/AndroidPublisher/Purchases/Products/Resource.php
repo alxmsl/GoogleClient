@@ -60,6 +60,13 @@ final class Resource implements InitializationInterface {
     }
 
     /**
+     * @return bool is purchase consumed
+     */
+    public function isConsumed() {
+        return $this->getConsumptionState() == self::STATE_CONSUMED;
+    }
+
+    /**
      * @return string developer-specified string that contains supplemental information about an order
      */
     public function getDeveloperPayload() {
@@ -78,6 +85,20 @@ final class Resource implements InitializationInterface {
      */
     public function getPurchaseState() {
         return $this->purchaseState;
+    }
+
+    /**
+     * @return bool is product cancelled
+     */
+    public function isCancelled() {
+        return $this->getPurchaseState() == self::ORDER_CANCELLED;
+    }
+
+    /**
+     * @return bool is product purchased
+     */
+    public function isPurchased() {
+        return $this->getPurchaseState() == self::ORDER_PURCHASED;
     }
 
     /**
