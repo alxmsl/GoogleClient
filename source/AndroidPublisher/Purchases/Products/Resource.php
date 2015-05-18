@@ -101,4 +101,42 @@ final class Resource implements InitializationInterface {
         $Resource->purchaseTimeMillis = (int) $Object->purchaseTimeMillis;
         return $Resource;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function __toString() {
+        $consumptionState = 'unknown';
+        switch ($this->getConsumptionState()) {
+            case self::STATE_CONSUMED:
+                $consumptionState = 'consumed';
+                break;
+            case self::STATE_YET_CONSUMED:
+                $consumptionState = 'yet to be consumed';
+                break;
+        }
+        $purchaseState = 'unknown';
+        switch ($this->getPurchaseState()) {
+            case self::ORDER_CANCELLED:
+                $purchaseState = 'cancelled';
+                break;
+            case self::ORDER_PURCHASED:
+                $purchaseState = 'purchase';
+                break;
+        }
+
+        $format = <<<'EOD'
+    consumptionState:   %s
+    developerPayload:   %s
+    kind:               %s
+    purchaseState:      %s
+    purchaseTimeMillis: %s
+EOD;
+        return sprintf($format
+            , $consumptionState
+            , $this->getDeveloperPayload()
+            , $this->getKind()
+            , $purchaseState
+            , date('Y-m-d H:i:s', $this->getPurchaseTimeMillis() / 1000));
+    }
 }
