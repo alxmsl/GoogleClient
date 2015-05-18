@@ -42,8 +42,7 @@ $Client->setClientId(CLIENT_ID)
 if (is_null($code)) {
     // Create authorization url
     $url = $Client->createAuthUrl(array(
-            'https://www.googleapis.com/auth/userinfo.email',
-            'https://www.googleapis.com/auth/userinfo.profile',
+            'https://www.googleapis.com/auth/androidpublisher',
         ), ''
         , WebServerApplication::RESPONSE_TYPE_CODE
         , WebServerApplication::ACCESS_TYPE_OFFLINE
