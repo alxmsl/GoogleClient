@@ -4,8 +4,8 @@ GoogleClient
 Google services API library. 
 Supported APIs:
 
-* (OAuth2 authorization API)[/README.md#oauth2]
-* (Google Cloud Messaging API)[/README.md#gcm]
+* [OAuth2 authorization API](/README.md#oauth2)
+* [Google Cloud Messaging API](/README.md#gcm)
 * Android Publisher API: in-app products, products purchases and subscriptions purchases
 
 Installation
@@ -54,9 +54,9 @@ To authorize client you need to create (WebServerApplication)[/source/OAuth2/Web
     print((string) $Token);
 ```
 
-You could see examples (webclient.uri.php)[/examples/webclient.uri.php] about uri creation, and 
- (webclient.authorize.php)[/examples/webclient.authorize.php] about code authentication. Already you could use completed 
- 5script (authorize.php)[/bin/authorize.php]
+You could see examples [webclient.uri.php](/examples/webclient.uri.php) about uri creation, and 
+ [webclient.authorize.php](/examples/webclient.authorize.php) about code authentication. Already you could use completed 
+ 5script [authorize.php](/bin/authorize.php)
  
 ```
 $ php bin/authorize.php
