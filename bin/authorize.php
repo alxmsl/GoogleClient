@@ -15,6 +15,7 @@ include __DIR__ . '/../vendor/autoload.php';
 use alxmsl\Cli\CommandPosix;
 use alxmsl\Cli\Exception\RequiredOptionException;
 use alxmsl\Cli\Option;
+use alxmsl\Google\OAuth2\Response\Token;
 use alxmsl\Google\OAuth2\WebServerApplication;
 
 $clientId     = '';
@@ -33,11 +34,11 @@ $Command->appendParameter(new Option('client', 'c', 'client id', Option::TYPE_ST
     , function($name, $value) use (&$clientId) {
         $clientId = $value;
     });
-$Command->appendParameter(new Option('redirect', 'r', 'redirect uri', Option::TYPE_STRING, true)
+$Command->appendParameter(new Option('redirect', 'r', 'redirect uri', Option::TYPE_STRING)
     , function($name, $value) use (&$redirectUri) {
         $redirectUri = $value;
     });
-$Command->appendParameter(new Option('scopes', 's', 'grant scopes', Option::TYPE_STRING, true)
+$Command->appendParameter(new Option('scopes', 's', 'grant scopes', Option::TYPE_STRING)
     , function($name, $value) use (&$scopes) {
         $scopes = explode(',', $value);
     });
@@ -57,7 +58,11 @@ try {
     if (!empty($code)) {
         // Get authorization token for access application
         $Token = $Client->authorizeByCode($code);
-        printf("%s\n", (string) $Token);
+        if ($Token instanceof Token) {
+            printf("%s\n", (string) $Token);
+        } else {
+            var_dump($Token);
+        }
     } else {
         // Get authorization uri
         $uri = $Client->createAuthUrl($scopes

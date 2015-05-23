@@ -1,200 +1,117 @@
 GoogleClient
-============
+===
 
-Google services API library
+Google services API library. 
+Supported APIs:
+
+* (OAuth2 authorization API)[/README.md#oauth2]
+* (Google Cloud Messaging API)[/README.md#gcm]
+* Android Publisher API: in-app products, products purchases and subscriptions purchases
 
 Installation
--------
+---
 
 For install library you need to modify your composer configuration file
 
-    "alxmsl/googleclient": "v1.1.*"
+```
+    "alxmsl/googleclient": "v1.*"
+```
 
 And just run installation command
 
-    composer.phar install
+```
+    $ composer.phar install
+```
 
-Web Server Applications authorization example
--------
+## <a name="oauth2"></a> OAuth2 authorization
 
-    use alxmsl\Google\OAuth2\Response\Token;
-    use alxmsl\Google\OAuth2\WebServerApplication;
-
-    // Define client identification
-    const CLIENT_ID       = 'my-client@id',
-          CLIENT_SECRET   = 'clientsecret';
-
-    $shortOptions = 'c::';
-    $longOptions = array(
-        'code::',
-    );
-    $options = getopt($shortOptions, $longOptions);
-    $code = null;
-    if (isset($options['c'])) {
-        $code = $options['c'];
-    } else if (isset($options['code'])) {
-        $code = $options['code'];
-    }
-
-    // Create new client
+To authorize client you need to create (WebServerApplication)[/source/OAuth2/WebServerApplication.php] instance with 
+ needed scopes using client identifier, client secret and redirect uri from you console
+  
+```
     $Client = new WebServerApplication();
-    $Client->setClientId(CLIENT_ID)
-        ->setClientSecret(CLIENT_SECRET)
-        ->setRedirectUri('http://example.com/oauth2callback');
+    $Client->setClientId(<client id>)
+        ->setClientSecret(<client secret>)
+        ->setRedirectUri(<redirect uri>);
+```
 
-    if (is_null($code)) {
-        // Create authorization url
-        $url = $Client->createAuthUrl(array(
-                'https://www.googleapis.com/auth/userinfo.email',
-                'https://www.googleapis.com/auth/userinfo.profile',
-            ), ''
-            , WebServerApplication::RESPONSE_TYPE_CODE
-            , WebServerApplication::ACCESS_TYPE_OFFLINE
-            // Use FORCE to get new refresh token for offline access type
-            , WebServerApplication::APPROVAL_PROMPT_FORCE);
-        var_dump($url);
-    } else {
-        var_dump($code);
-        // Get access token
-        $Token = $Client->authorizeByCode($code);
-        var_dump($Token);
+...make authentication url
 
-        if ($Token instanceof Token) {
-            // Get refresh token
-            if (!$Token->isOnline()) {
-                $Refreshed = $Client->refresh($Token->getRefreshToken());
-                var_dump($Refreshed);
-            }
-
-            $revoked = $Client->revoke($Token->getAccessToken());
-            if ($revoked) {
-                var_dump('token ' . $Token->getAccessToken() . ' was revoke');
-            } else {
-                var_dump('error on revoke token ' . $Token->getAccessToken());
-            }
-        }
-    }
-
-Inapp purchases workflow example
--------
-
-    use alxmsl\Google\InAppPurchases\InAppPurchases;
-
-    // Check subscription
-    const PACKAGE_NAME = 'com.myapp',
-          PRODUCT      = 'myapp.product.1',
-          INAPP        = 'my inapp token';
-
-    $shortOptions = 't::';
-    $longOptions = array(
-        'token::',
-    );
-    $options = getopt($shortOptions, $longOptions);
-    $token = null;
-    if (isset($options['t'])) {
-        $token = $options['t'];
-    } else if (isset($options['token'])) {
-        $token = $options['token'];
-    }
-
-    if (!is_null($token)) {
-        $Purchases = new InAppPurchases();
-        $Purchases->setPackage(PACKAGE_NAME)
-            ->setAccessToken($token);
-        $Resource = $Purchases->get(PRODUCT, INAPP);
-        var_dump($Resource);
-    } else {
-        die ('required parameter \'token\' not present' . "\n");
-    }
-
-Subscriptions workflow example
--------
-
-    use alxmsl\Google\OAuth2\WebServerApplication;
-    use alxmsl\Google\Purchases\Purchases;
-
-    // Define client identification
-    const CLIENT_ID     = 'my client id',
-          CLIENT_SECRET = 'my client secret code',
-          REDIRECT_URL  = 'my redirect url';
-
-    // Create new client
-    $Client = new WebServerApplication();
-    $Client->setClientId(CLIENT_ID)
-        ->setClientSecret(CLIENT_SECRET)
-        ->setRedirectUri(REDIRECT_URL);
-
-    // Create authorization url
-    $url = $Client->createAuthUrl(array('https://www.googleapis.com/auth/androidpublisher')
+```
+    $Client->createAuthUrl([
+            'https://www.googleapis.com/auth/androidpublisher',
+        ]
         , ''
         , WebServerApplication::RESPONSE_TYPE_CODE
-        , WebServerApplication::ACCESS_TYPE_OFFLINE);
-    echo $url . "\n";
+        , WebServerApplication::ACCESS_TYPE_OFFLINE
+        , WebServerApplication::APPROVAL_PROMPT_FORCE);
+```
 
-    // Get client authorization code by following authorization url
-    const CLIENT_CODE = 'authorization code';
+...compete authorization in browser and give authorization code. With this code you could get access token
+ 
+```
+    $Token = $Client->authorizeByCode(<code>);
+    print((string) $Token);
+```
 
-    // Get access token
-    $Token = $Client->authorizeByCode(CLIENT_CODE);
-    var_dump($Token);
+You could see examples (webclient.uri.php)[/examples/webclient.uri.php] about uri creation, and 
+ (webclient.authorize.php)[/examples/webclient.authorize.php] about code authentication. Already you could use completed 
+ 5script (authorize.php)[/bin/authorize.php]
+ 
+```
+$ php bin/authorize.php
+Using: /usr/local/bin/php bin/authorize.php [-h|--help] [-o|--code] -c|--client -r|--redirect -s|--scopes -e|--secret
+-h, --help  - show help
+-o, --code  - authorization code
+-c, --client  - client id
+-r, --redirect  - redirect uri
+-s, --scopes  - grant scopes
+-e, --secret  - client secret
 
-    // Check subscription
-    const PACKAGE_NAME = 'com.myapp',
-          PRODUCT      = 'myapp.subscription.1',
-          SUBSCRIPTION = 'my subscription identifier';
+$ php bin/authorize.php --client='my-client@id' --secret='clientsecret' --redirect='http://example.com/oauth2callback' 
+    --scopes='https://www.googleapis.com/auth/androidpublisher'
+https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=my-client@id
+&redirect_uri=http%3A%2F%2Fexample.com%2Foauth2callback&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fandroidpublisher
+&access_type=offline&approval_prompt=force
 
-    $Purchases = new Purchases();
-    $Purchases->setAccessToken($Token->getAccessToken())
-        ->setPackage(PACKAGE_NAME);
-    $Subscription = $Purchases->get(PRODUCT, SUBSCRIPTION);
-    var_dump($Subscription);
+$ php bin/authorize.php --client='my-client@id' --secret='clientsecret' --code='authorization/code'
+    access token:  ya.AccES5_T0keN
+    expires in:    3558
+    id token:      id.T0kEn
+    refresh token: refrE5H_T0KEN
+    token type:    Bearer
 
-    // Refresh token
-    sleep($Token->getExpiresIn());
-    $RefreshedToken = $Client->refresh($Token->getRefreshToken());
+```
 
-    // Check subscription by unauthorized token
-    $Subscription = $Purchases->get(PRODUCT, SUBSCRIPTION);
-    var_dump($Subscription);
+Of course, I created scripts for token refreshing
 
-    // Check subscription by refreshed token
-    $Purchases->setAccessToken($RefreshedToken->getAccessToken());
-    $Subscription = $Purchases->get(PRODUCT, SUBSCRIPTION);
-    var_dump($Subscription);
+```
+$ php bin/refresh.php
+Using: /usr/local/bin/php bin/refresh.php [-h|--help] -c|--client -e|--secret -t|--token
+-h, --help  - show help
+-c, --client  - client id
+-e, --secret  - client secret
+-t, --token  - refresh token
+```
 
-GCM notification example
--------
+...and token revoking
+ 
+```
+$ php bin/revoke.php --help
+Using: /usr/local/bin/php bin/revoke.php [-h|--help] -t|--token
+-h, --help  - show help
+-t, --token  - revoked token
+```
 
-    final class NewPayloadData extends PayloadData {
-        protected function getDataFields() {
-            return array(
-                'test' => 'test_01',
-            );
-        }
-    }
-    
-    // Create payload instance
-    $Data = new NewPayloadData();
-    
-    // Create and initialize message instance
-    $Message = new PayloadMessage();
-    $Message->setRegistrationIds('DeV1CeT0kEN')
-        ->setType(PayloadMessage::TYPE_JSON)
-        ->setData($Data);
-    
-    // Create GCM client
-    $Client = new Client();
-    $Client->getRequest()->setConnectTimeout(60)
-        ->setSslVersion(6); // @see CURLOPT_SSLVERSION
-    $Client->setAuthorizationKey('aUTH0R1Z4t1oNKEy');
-    
-    // ...and send the message
-    $Response = $Client->send($Message);
-    var_dump($Response);
+## <a name="gcm"></a> Google Cloud Messaging
+
+
+
+## <a name="oauth2"></a> OAuth2 authorization
 
 License
 -------
-Copyright © 2014 Alexey Maslov <alexey.y.maslov@gmail.com>
+Copyright © 2014-2015 Alexey Maslov <alexey.y.maslov@gmail.com>
 This work is free. You can redistribute it and/or modify it under the
 terms of the Do What The Fuck You Want To Public License, Version 2,
 as published by Sam Hocevar. See the COPYING file for more details.
