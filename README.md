@@ -6,7 +6,8 @@ Supported APIs:
 
 * [OAuth2 authorization API](/README.md#oauth2)
 * [Google Cloud Messaging API](/README.md#gcm)
-* Android Publisher API: in-app products, products purchases and subscriptions purchases
+* Android Publisher API: [in-app products](/README.md#inapp), [products purchases](/README.md#products) and 
+ [subscriptions purchases](/README.md#subscriptions)
 
 Installation
 ---
@@ -105,9 +106,56 @@ Using: /usr/local/bin/php bin/revoke.php [-h|--help] -t|--token
 
 ## <a name="gcm"></a> Google Cloud Messaging
 
+For create Google Cloud Message you need to create child for class [PayloadData](/source/GCM/Message/PayloadData.php) 
+ and define `getDataFields` method. You could see example below or in [gcm.php](/examples/gcm.php)
+ 
+```
+    // Create payload data class
+    final class NewPayloadData extends PayloadData {
+        protected function getDataFields() {
+            return [
+                'test' => 'test_01',
+            ];
+        }
+    }
+    
+    // Create and initialize payload message instance
+    $Message = new PayloadMessage();
+    $Message->setRegistrationIds('DeV1CeT0kEN')
+        ->setType(PayloadMessage::TYPE_JSON)
+        ->setData(new NewPayloadData());
+    
+    // Create GCM client
+    $Client = new Client();
+    $Client->getRequest()->setConnectTimeout(60)
+        ->setSslVersion(6);
+    $Client->setAuthorizationKey('aUTH0R1Z4t1oNKEy');
+    
+    // ...and send the message
+    $Response = $Client->send($Message);
+    var_dump($Response);
+```
 
+You could use completed script
 
-## <a name="oauth2"></a> OAuth2 authorization
+```
+$ php bin/gcm.php
+Using: /usr/local/bin/php bin/gcm.php [-h|--help] [-d|--data] -i|--id -k|--key
+-h, --help  - show help
+-d, --data  - payload data
+-i, --id  - device registration id
+-k, --key  - authorization key
+
+$ php bin/gcm.php --id='DeV1CeT0kEN' --key='aUTH0R1Z4t1oNKEy' --data='{"test":"test_01"}'
+    success: 1
+    failure: 0
+```
+
+## <a name="inapp"></a> In-app purchases
+
+## <a name="products"></a> Product purchases
+
+## <a name="subscriptions"></a> Subscriptions purchases
 
 License
 -------
