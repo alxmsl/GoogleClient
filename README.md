@@ -6,8 +6,8 @@ Supported APIs:
 
 * [OAuth2 authorization API](/README.md#oauth2)
 * [Google Cloud Messaging API](/README.md#gcm)
-* Android Publisher API: [in-app products](/README.md#inapp), [products purchases](/README.md#products) and 
- [subscriptions purchases](/README.md#subscriptions)
+* Android Publisher API: [in-app products](/README.md#inapp), [purchases products](/README.md#products) and 
+ [purchases subscriptions](/README.md#subscriptions)
 
 Installation
 ---
@@ -26,8 +26,9 @@ And just run installation command
 
 ## <a name="oauth2"></a> OAuth2 authorization
 
-To authorize client you need to create [WebServerApplication](/source/OAuth2/WebServerApplication.php) instance with 
- needed scopes using client identifier, client secret and redirect uri from you console
+To authorize client via [Google OAuth2](https://developers.google.com/android-publisher/authorization) you need to 
+ create [WebServerApplication](/source/OAuth2/WebServerApplication.php) instance with needed scopes using client 
+ identifier, client secret and redirect uri from you console
   
 ```
     $Client = new WebServerApplication();
@@ -106,8 +107,9 @@ Using: /usr/local/bin/php bin/revoke.php [-h|--help] -t|--token
 
 ## <a name="gcm"></a> Google Cloud Messaging
 
-For create Google Cloud Message you need to create child for class [PayloadData](/source/GCM/Message/PayloadData.php) 
- and define `getDataFields` method. You could see example below or in [gcm.php](/examples/gcm.php)
+For create [Google Cloud Message](https://developer.android.com/google/gcm/index.html) you need to create child for 
+ class [PayloadData](/source/GCM/Message/PayloadData.php) and define `getDataFields` method. You could see example below 
+ or in [gcm.php](/examples/gcm.php)
  
 ```
     // Create payload data class
@@ -136,7 +138,7 @@ For create Google Cloud Message you need to create child for class [PayloadData]
     var_dump($Response);
 ```
 
-You could use completed script
+You could use [completed script](/bin/gcm.php)
 
 ```
 $ php bin/gcm.php
@@ -153,9 +155,45 @@ $ php bin/gcm.php --id='DeV1CeT0kEN' --key='aUTH0R1Z4t1oNKEy' --data='{"test":"t
 
 ## <a name="inapp"></a> In-app purchases
 
-## <a name="products"></a> Product purchases
+You could use [In-App products API](https://developers.google.com/android-publisher/api-ref/inappproducts) to manage 
+ products of your application. For example, you could get all product prices for all end-user countries
+ 
+```
+    $Client = new Client();
+    $Client->setPackage(<package name>)
+        ->setAccessToken(<access token>);
+    /** @var InAppProductsResource $Resource */
+    $Resource = $Client->get(<product id>);
+    var_dump($Resource->getPrices());
+```
 
-## <a name="subscriptions"></a> Subscriptions purchases
+Already, you could use [inappproducts.get.php](/bin/inappproducts.get.php) to get info about products
+ 
+```
+$ php bin/inappproducts.get.php --help
+Using: /usr/local/bin/php bin/inappproducts.get.php [-h|--help] -a|--access [-p|--package] -r|--product
+-h, --help  - show help
+-a, --access  - access token
+-p, --package  - package name
+-r, --product  - product id
+```
+
+## <a name="products"></a> Purchases products 
+
+Using [Purchases.Products API]() you could check user purchases in third-party server application. For example if 
+ purchase purchased and does not cancel now:
+
+```
+$Client = new Client();
+$Client->setPackage(PACKAGE_NAME)
+    ->setAccessToken(ACCESS_TOKEN);
+
+/** @var ProductsResource $Resource */
+$Resource = $Client->get(PRODUCT_ID, PURCHASE_TOKEN);
+var_dump($Resource->isPurchased() && !$Resource->isCancelled());
+```
+
+## <a name="subscriptions"></a> Purchases subscriptions 
 
 License
 -------

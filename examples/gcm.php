@@ -6,7 +6,7 @@
  * To Public License, Version 2, as published by Sam Hocevar. See
  * http://www.wtfpl.net/ for more details.
  *
- * GCM message sending test
+ * GCM message sending example
  * @author alxmsl
  * @date 5/28/13
  */

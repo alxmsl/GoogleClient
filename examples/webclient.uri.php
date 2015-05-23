@@ -6,7 +6,7 @@
  * To Public License, Version 2, as published by Sam Hocevar. See
  * http://www.wtfpl.net/ for more details.
  *
- * Google web server authorization example
+ * Google web server authorization uri example
  * @author alxmsl
  * @date 1/24/13
  */
