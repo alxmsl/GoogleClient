@@ -25,7 +25,7 @@ And just run installation command
 
 ## <a name="oauth2"></a> OAuth2 authorization
 
-To authorize client you need to create (WebServerApplication)[/source/OAuth2/WebServerApplication.php] instance with 
+To authorize client you need to create [WebServerApplication](/source/OAuth2/WebServerApplication.php) instance with 
  needed scopes using client identifier, client secret and redirect uri from you console
   
 ```
