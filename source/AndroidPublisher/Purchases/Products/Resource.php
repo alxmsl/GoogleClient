@@ -8,6 +8,7 @@
  */
 
 namespace alxmsl\Google\AndroidPublisher\Purchases\Products;
+
 use alxmsl\Google\InitializationInterface;
 
 /**

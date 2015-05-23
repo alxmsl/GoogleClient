@@ -11,8 +11,7 @@
  * @date 5/28/13
  */
 
-include '../source/Autoloader.php';
-include '../vendor/alxmsl/network/source/Autoloader.php';
+include '../vendor/autoload.php';
 
 use alxmsl\Google\GCM\Client;
 use alxmsl\Google\GCM\Message\PayloadData;

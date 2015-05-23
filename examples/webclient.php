@@ -11,8 +11,7 @@
  * @date 1/24/13
  */
 
-include '../source/Autoloader.php';
-include '../vendor/alxmsl/network/source/Autoloader.php';
+include '../vendor/autoload.php';
 
 use alxmsl\Google\OAuth2\Response\Token;
 use alxmsl\Google\OAuth2\WebServerApplication;

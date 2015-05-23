@@ -80,6 +80,7 @@ final class Client {
     /**
      * Send GCM message method
      * @param PayloadMessage $Message GCM message instance
+     * @return Response sent response instance
      * @throws GCMFormatException when request or response format was incorrect
      * @throws GCMUnauthorizedException when was incorrect authorization key
      * @throws GCMServerError when something wrong on the GCM server

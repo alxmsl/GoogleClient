@@ -7,16 +7,18 @@
  * http://www.wtfpl.net/ for more details.
  */
 
-namespace alxmsl\Google\AndroidPublisher\Purchases\Products;
-use alxmsl\Google\AndroidPublisher\Purchases\Exception\ErrorException;
-use alxmsl\Google\AndroidPublisher\Purchases\Exception\InvalidCredentialsException;
+namespace alxmsl\Google\AndroidPublisher\InAppProducts;
+
+use alxmsl\Google\AndroidPublisher\Exception\ErrorException;
+use alxmsl\Google\AndroidPublisher\Exception\InvalidCredentialsException;
 use alxmsl\Google\OAuth2\WebServerApplication;
 use alxmsl\Network\Exception\HttpClientErrorCodeException;
 use alxmsl\Network\Exception\HttpServerErrorCodeException;
 use UnexpectedValueException;
+use RuntimeException;
 
 /**
- * Class for support GooglePlay Purchases Products API
+ * Class for support GooglePlay InAppProducts API
  * @author alxmsl
  */
 final class Client extends WebServerApplication {
@@ -47,20 +49,18 @@ final class Client extends WebServerApplication {
     }
 
     /**
-     * Check user product purchases
+     * Returns information about the in-app product specified
      * @param string $productId product identifier
-     * @param string $token purchase product token
      * @return Resource product purchase resource instance
      * @throws ErrorException when API error acquired
+     * @throws RuntimeException when type code for client is not supported now
      */
-    public function get($productId, $token) {
+    public function get($productId) {
         $accessToken = $this->getAccessToken();
         if (!empty($accessToken)) {
             $Request = $this->getRequest(self::ENDPOINT_PURCHASES)
                 ->addUrlField('applications', $this->getPackage())
-                ->addUrlField('purchases', '')
-                ->addUrlField('products', $productId)
-                ->addUrlField('tokens', $token)
+                ->addUrlField('inappproducts', $productId)
                 ->addGetField('access_token', $accessToken);
             try {
                 return Resource::initializeByString($Request->send());

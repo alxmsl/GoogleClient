@@ -7,7 +7,8 @@
  * http://www.wtfpl.net/ for more details.
  */
 
-namespace alxmsl\Google\AndroidPublisher\Purchases\Exception;
+namespace alxmsl\Google\AndroidPublisher\Exception;
+
 use alxmsl\Google\InitializationInterface;
 use Exception;
 use stdClass;

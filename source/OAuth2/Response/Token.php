@@ -193,4 +193,23 @@ final class Token implements InitializationInterface {
         }
         return $Response;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function __toString() {
+        $format = <<<'EOD'
+    access token:  %s
+    expires in:    %s
+    id token:      %s
+    refresh token: %s
+    token type:    %s
+EOD;
+        return sprintf($format
+            , $this->getAccessToken()
+            , $this->getExpiresIn()
+            , $this->getIdToken()
+            , $this->getRefreshToken()
+            , $this->getTokenType());
+    }
 }
