@@ -184,16 +184,38 @@ Using [Purchases.Products API]() you could check user purchases in third-party s
  purchase purchased and does not cancel now:
 
 ```
-$Client = new Client();
-$Client->setPackage(PACKAGE_NAME)
-    ->setAccessToken(ACCESS_TOKEN);
+    use alxmsl\Google\AndroidPublisher\Purchases\Client;
+    use alxmsl\Google\AndroidPublisher\Purchases\Products\Resource as ProductsResource;
 
-/** @var ProductsResource $Resource */
-$Resource = $Client->get(PRODUCT_ID, PURCHASE_TOKEN);
-var_dump($Resource->isPurchased() && !$Resource->isCancelled());
+    $Client = new Client();
+    $Client->setPackage(<package name>)
+        ->setAccessToken(<access token>);
+    
+    /** @var ProductsResource $Resource */
+    $Resource = $Client->get(<product id>, <purchase token>);
+    var_dump($Resource->isPurchased() && !$Resource->isCancelled());
 ```
 
 ## <a name="subscriptions"></a> Purchases subscriptions 
+
+This library allows all operations over user subscriptions using some scripts: [get](/bin/subscriptions.get.php), 
+ [cancel](/bin/subscriptions.cancel.php), [defer](/bin/subscriptions.defer.php), [refund](/bin/subscriptions.refund.php) 
+ and [revoke](/bin/subscriptions.revoke.php)
+
+How to check subscription, for example:
+
+```
+    use alxmsl\Google\AndroidPublisher\Purchases\Subscription\Resource as SubscriptionsResource;
+    use alxmsl\Google\AndroidPublisher\Purchases\Subscription\SubscriptionsClient;
+    
+    $Client = new SubscriptionsClient();
+    $Client->setPackage(<package name>)
+        ->setAccessToken(<access token>);
+    
+    /** @var SubscriptionsResource $Resource */
+    $Resource = $Client->get(<subscription id>, <purchase token>);
+    var_dump($Resource->isAutoRenewing() && !$Resource->isExpired());
+```
 
 License
 -------

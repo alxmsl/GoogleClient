@@ -44,6 +44,20 @@ final class Resource implements InitializationInterface {
     }
 
     /**
+     * @return float time at which the subscription will expire, seconds
+     */
+    public function getExpiryTime() {
+        return $this->getExpiryTimeMillis() / 1000;
+    }
+
+    /**
+     * @return bool check if subscription is expired now
+     */
+    public function isExpired() {
+        return $this->getExpiryTime() > time();
+    }
+
+    /**
      * @return string whether the subscription will automatically be renewed when it reaches its current expiry time
      */
     public function isAutoRenewing() {
