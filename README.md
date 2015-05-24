@@ -198,9 +198,10 @@ Using [Purchases.Products API]() you could check user purchases in third-party s
 
 ## <a name="subscriptions"></a> Purchases subscriptions 
 
-This library allows all operations over user subscriptions using some scripts: [get](/bin/subscriptions.get.php), 
- [cancel](/bin/subscriptions.cancel.php), [defer](/bin/subscriptions.defer.php), [refund](/bin/subscriptions.refund.php) 
- and [revoke](/bin/subscriptions.revoke.php)
+This library allows all operations over user 
+ [subscriptions](https://developers.google.com/android-publisher/api-ref/purchases/subscriptions) using some scripts: 
+ [get](/bin/subscriptions.get.php), [cancel](/bin/subscriptions.cancel.php), [defer](/bin/subscriptions.defer.php), 
+ [refund](/bin/subscriptions.refund.php) and [revoke](/bin/subscriptions.revoke.php)
 
 How to check subscription, for example:
 
