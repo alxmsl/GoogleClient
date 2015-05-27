@@ -15,7 +15,7 @@ include __DIR__ . '/../vendor/autoload.php';
 use alxmsl\Cli\CommandPosix;
 use alxmsl\Cli\Exception\RequiredOptionException;
 use alxmsl\Cli\Option;
-use alxmsl\Google\AndroidPublisher\Purchases\Subscription\SubscriptionsClient;
+use alxmsl\Google\AndroidPublisher\Purchases\Subscriptions\SubscriptionsClient;
 
 $accessToken    = '';
 $expireTime     = 0;

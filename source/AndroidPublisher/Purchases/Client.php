@@ -12,7 +12,7 @@ namespace alxmsl\Google\AndroidPublisher\Purchases;
 use alxmsl\Google\AndroidPublisher\Exception\ErrorException;
 use alxmsl\Google\AndroidPublisher\Exception\InvalidCredentialsException;
 use alxmsl\Google\AndroidPublisher\Purchases\Products\Resource as ProductResource;
-use alxmsl\Google\AndroidPublisher\Purchases\Products\Resource as SubscriptionResource;
+use alxmsl\Google\AndroidPublisher\Purchases\Subscriptions\Resource as SubscriptionResource;
 use alxmsl\Google\OAuth2\WebServerApplication;
 use alxmsl\Network\Exception\HttpClientErrorCodeException;
 use alxmsl\Network\Exception\HttpServerErrorCodeException;

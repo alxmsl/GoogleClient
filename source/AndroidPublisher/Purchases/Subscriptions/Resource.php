@@ -7,7 +7,7 @@
  * http://www.wtfpl.net/ for more details.
  */
 
-namespace alxmsl\Google\AndroidPublisher\Purchases\Subscription;
+namespace alxmsl\Google\AndroidPublisher\Purchases\Subscriptions;
 
 use alxmsl\Google\InitializationInterface;
 

@@ -15,7 +15,7 @@ include __DIR__ . '/../vendor/autoload.php';
 use alxmsl\Cli\CommandPosix;
 use alxmsl\Cli\Exception\RequiredOptionException;
 use alxmsl\Cli\Option;
-use alxmsl\Google\AndroidPublisher\Purchases\Subscription\SubscriptionsClient;
+use alxmsl\Google\AndroidPublisher\Purchases\Subscriptions\SubscriptionsClient;
 
 $accessToken    = '';
 $packageName    = '';
@@ -47,7 +47,6 @@ try {
     $Client->setPackage($packageName)
         ->setAccessToken($accessToken);
     $Client->cancel($subscriptionId, $token);
-    printf("subscription %s cancelled\n", $subscriptionId);
 } catch (RequiredOptionException $Ex) {
     $Command->displayHelp();
 }
