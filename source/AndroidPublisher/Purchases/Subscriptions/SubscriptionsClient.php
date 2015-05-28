@@ -22,20 +22,13 @@ use UnexpectedValueException;
  * Client for Google Play subscriptions API
  * @author alxmsl
  */
-final class SubscriptionsClient extends Client {
+final class SubscriptionsClient extends Client implements SubscriptionsClientInterface {
     public function __construct() {
         parent::__construct(self::TYPE_SUBSCRIPTIONS);
     }
 
     /**
-     * Cancel subscription method
-     * @param string $productId product identifier
-     * @param string $token purchase product token
-     * @return bool if subscriptions removed correctly returns TRUE
-     * @throws InvalidCredentialsException when access grants is not granted
-     * @throws ErrorException when API error acquired
-     * @throws TransportException when HTTP transport error occurred
-     * @throws UnexpectedValueException when access token is empty for client
+     * @inheritdoc
      */
     public function cancel($productId, $token) {
         $this->sendRequest('cancel', $productId, $token);
@@ -43,16 +36,7 @@ final class SubscriptionsClient extends Client {
     }
 
     /**
-     * Defer subscription method
-     * @param string $productId product identifier
-     * @param int $expectedTimeMillis expected subscription expiration time, milliseconds
-     * @param int $desiredTimeMillis desired subscription expiration time, milliseconds
-     * @param string $token purchase product token
-     * @return int new expiration time, milliseconds
-     * @throws InvalidCredentialsException when access grants is not granted
-     * @throws ErrorException when API error acquired
-     * @throws TransportException when HTTP transport error occurred
-     * @throws UnexpectedValueException when access token is empty for client
+     * @inheritdoc
      */
     public function defer($productId, $expectedTimeMillis, $desiredTimeMillis, $token) {
         $Request = $this->createRequest('defer', $productId, $token)
@@ -68,14 +52,7 @@ final class SubscriptionsClient extends Client {
     }
 
     /**
-     * Refund subscription method
-     * @param string $productId product identifier
-     * @param string $token purchase product token
-     * @return bool if subscriptions refunded correctly returns TRUE
-     * @throws InvalidCredentialsException when access grants is not granted
-     * @throws ErrorException when API error acquired
-     * @throws TransportException when HTTP transport error occurred
-     * @throws UnexpectedValueException when access token is empty for client
+     * @inheritdoc
      */
     public function refund($productId, $token) {
         $this->sendRequest('refund', $productId, $token);
@@ -83,14 +60,7 @@ final class SubscriptionsClient extends Client {
     }
 
     /**
-     * Revoke subscription method
-     * @param string $productId product identifier
-     * @param string $token purchase product token
-     * @return bool if subscriptions revoked correctly returns TRUE
-     * @throws InvalidCredentialsException when access grants is not granted
-     * @throws ErrorException when API error acquired
-     * @throws TransportException when HTTP transport error occurred
-     * @throws UnexpectedValueException when access token is empty for client
+     * @inheritdoc
      */
     public function revoke($productId, $token) {
         $this->sendRequest('revoke', $productId, $token);

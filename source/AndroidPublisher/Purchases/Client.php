@@ -23,7 +23,7 @@ use RuntimeException;
  * Class for support GooglePlay Purchases API
  * @author alxmsl
  */
-class Client extends WebServerApplication {
+class Client extends WebServerApplication implements ClientInterface {
     /**
      * API client code
      */
@@ -75,12 +75,7 @@ class Client extends WebServerApplication {
     }
 
     /**
-     * Check user product purchases
-     * @param string $productId product identifier
-     * @param string $token purchase product token
-     * @return Resource product purchase resource instance
-     * @throws ErrorException when API error acquired
-     * @throws RuntimeException when type code for client is not supported now
+     * @inheritdoc
      */
     public function get($productId, $token) {
         $accessToken = $this->getAccessToken();
