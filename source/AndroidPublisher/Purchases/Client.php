@@ -83,8 +83,8 @@ class Client extends WebServerApplication implements ClientInterface {
         if (!empty($accessToken)) {
             $Request = $this->getRequest(self::ENDPOINT_PURCHASES)
                 ->addUrlField('applications', $this->getPackage())
-                ->addUrlField($this->getPurchasesUri(), '')
-                ->addUrlField('products', $productId)
+                ->addUrlField('purchases', '')
+                ->addUrlField($this->getPurchasesUri(), $productId)
                 ->addUrlField('tokens', $token)
                 ->addGetField('access_token', $accessToken);
             try {
