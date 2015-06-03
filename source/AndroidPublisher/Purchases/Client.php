@@ -11,6 +11,7 @@ namespace alxmsl\Google\AndroidPublisher\Purchases;
 
 use alxmsl\Google\AndroidPublisher\Exception\ErrorException;
 use alxmsl\Google\AndroidPublisher\Exception\InvalidCredentialsException;
+use alxmsl\Google\AndroidPublisher\Exception\NotFoundException;
 use alxmsl\Google\AndroidPublisher\Purchases\Products\Resource as ProductResource;
 use alxmsl\Google\AndroidPublisher\Purchases\Subscriptions\Resource as SubscriptionResource;
 use alxmsl\Google\OAuth2\WebServerApplication;
@@ -99,6 +100,8 @@ class Client extends WebServerApplication implements ClientInterface {
                 switch ($Ex->getCode()) {
                     case 401:
                         throw InvalidCredentialsException::initializeByString($Ex->getMessage());
+                    case 404:
+                        throw NotFoundException::initializeByString($Ex->getMessage());
                     default:
                         throw ErrorException::initializeByString($Ex->getMessage());
                 }

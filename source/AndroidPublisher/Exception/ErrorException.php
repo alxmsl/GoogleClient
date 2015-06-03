@@ -34,9 +34,13 @@ class ErrorException extends Exception implements InitializationInterface {
      * @inheritdoc
      */
     public static function initializeByString($string) {
-        $Object         = json_decode($string);
-        $ErrorException = new static($Object->error->message, $Object->error->code);
-        $ErrorException->errors = (array) $Object->error->errors;
+        $Object = json_decode($string);
+        if (!is_null($Object)) {
+            $ErrorException = new static($Object->error->message, $Object->error->code);
+            $ErrorException->errors = (array) $Object->error->errors;
+        } else {
+            $ErrorException = new static($string);
+        }
         return $ErrorException;
     }
 }
