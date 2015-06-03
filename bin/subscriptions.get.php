@@ -28,7 +28,7 @@ $Command->appendParameter(new Option('access', 'a', 'access token', Option::TYPE
     , function($name, $value) use (&$accessToken) {
         $accessToken = $value;
     });
-$Command->appendParameter(new Option('package', 'p', 'package name', Option::TYPE_STRING)
+$Command->appendParameter(new Option('package', 'p', 'package name', Option::TYPE_STRING, true)
     , function($name, $value) use (&$packageName) {
         $packageName = $value;
     });
