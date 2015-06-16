@@ -1,6 +1,8 @@
 GoogleClient
 ===
 
+[![Build Status](https://travis-ci.org/alxmsl/GoogleClient.png?branch=master)](http://travis-ci.org/alxmsl/GoogleClient)
+
 Google services API library. 
 Supported APIs:
 
