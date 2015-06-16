@@ -8,6 +8,7 @@
  */
 
 namespace alxmsl\Google\OAuth2;
+
 use alxmsl\Google\OAuth2\Response\Error;
 use alxmsl\Google\OAuth2\Response\Token;
 use alxmsl\Network\Exception\HttpClientErrorCodeException;
@@ -83,19 +84,19 @@ class WebServerApplication extends Client {
      * @return string url string for user authorization
      */
     public function createAuthUrl(array $scopes, $state = '', $responseType = self::RESPONSE_TYPE_CODE, $accessType = self::ACCESS_TYPE_ONLINE, $approvalPrompt = self::APPROVAL_PROMPT_AUTO, $loginHint = '') {
-        $parameters = array(
+        $parameters = [
             'response_type=' . $responseType,
             'client_id=' . $this->getClientId(),
             'redirect_uri=' . urlencode($this->getRedirectUri()),
             'scope=' . urlencode(implode(' ', $scopes)),
             'access_type=' . $accessType,
             'approval_prompt=' . $approvalPrompt,
-        );
+        ];
         if (!empty($state)) {
-            $parameters['state'] = $state;
+            $parameters[] = sprintf('state=%s', $state);
         }
         if (!empty($loginHint)) {
-            $parameters['login_hint'] = $loginHint;
+            $parameters[] = sprintf('login_hint=%s', $loginHint);
         }
         return self::ENDPOINT_INITIAL_REQUEST . '?' . implode('&', $parameters);
     }
