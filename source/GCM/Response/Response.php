@@ -46,7 +46,7 @@ final class Response implements InitializationInterface {
     /**
      * @var Status[] result statuses
      */
-    private $results = array();
+    private $results = [];
 
     /**
      * Count of canonical identifiers setter
@@ -131,7 +131,7 @@ final class Response implements InitializationInterface {
     /**
      * Initialization method
      * @param string $string data for object initialization
-     * @return InitializationInterface initialized object
+     * @return $this initialized object
      * @throws GCMFormatException for unknown response format
      */
     public static function initializeByString($string) {

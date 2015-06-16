@@ -33,11 +33,11 @@ For completely tests running just call `phpunit` command
     $ phpunit
     PHPUnit 4.7.3 by Sebastian Bergmann and contributors.
 
-    ...........
-
-    Time: 65 ms, Memory: 5.25Mb
-
-    OK (11 tests, 48 assertions)
+    ..............................
+    
+    Time: 88 ms, Memory: 6.50Mb
+    
+    OK (30 tests, 188 assertions)
 ```
 
 ## <a name="oauth2"></a> OAuth2 authorization
