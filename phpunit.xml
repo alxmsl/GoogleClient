@@ -10,5 +10,8 @@
         <testsuite name="OAuth2">
             <directory>./test/OAuth2</directory>
         </testsuite>
+        <testsuite name="GCM">
+            <directory>./test/GCM</directory>
+        </testsuite>
     </testsuites>
 </phpunit>

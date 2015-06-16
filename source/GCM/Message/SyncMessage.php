@@ -14,7 +14,7 @@ namespace alxmsl\Google\GCM\Message;
  * @author alxmsl
  * @date 5/27/13
  */ 
-final class SyncMessage extends PayloadMessage {
+class SyncMessage extends PayloadMessage {
     /**
      * @var string messages collapse key
      */
@@ -43,8 +43,8 @@ final class SyncMessage extends PayloadMessage {
      * @return array exported data
      */
     public function export() {
-        return parent::export() + array(
+        return parent::export() + [
             'collapse_key' => $this->getCollapseKey(),
-        );
+        ];
     }
 }
