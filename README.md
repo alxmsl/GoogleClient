@@ -24,6 +24,22 @@ And just run installation command
     $ composer.phar install
 ```
 
+Tests
+---
+
+For completely tests running just call `phpunit` command
+
+```
+    $ phpunit
+    PHPUnit 4.7.3 by Sebastian Bergmann and contributors.
+
+    ...........
+
+    Time: 65 ms, Memory: 5.25Mb
+
+    OK (11 tests, 48 assertions)
+```
+
 ## <a name="oauth2"></a> OAuth2 authorization
 
 To authorize client via [Google OAuth2](https://developers.google.com/android-publisher/authorization) you need to 
