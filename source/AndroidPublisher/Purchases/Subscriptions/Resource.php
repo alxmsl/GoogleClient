@@ -17,9 +17,9 @@ use alxmsl\Google\InitializationInterface;
  */
 final class Resource implements InitializationInterface {
     /**
-     * @var string whether the subscription will automatically be renewed when it reaches its current expiry time
+     * @var bool whether the subscription will automatically be renewed when it reaches its current expiry time
      */
-    private $autoRenewing = '';
+    private $autoRenewing = false;
 
     /**
      * @var int time at which the subscription will expire, milliseconds
@@ -54,7 +54,7 @@ final class Resource implements InitializationInterface {
      * @return bool check if subscription is expired now
      */
     public function isExpired() {
-        return $this->getExpiryTime() > time();
+        return $this->getExpiryTime() < time();
     }
 
     /**
