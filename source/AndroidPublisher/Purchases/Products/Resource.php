@@ -26,7 +26,8 @@ final class Resource implements InitializationInterface {
      * Order state constants
      */
     const ORDER_PURCHASED = 0,
-          ORDER_CANCELLED = 1;
+          ORDER_CANCELLED = 1,
+          ORDER_UNKNOWN   = -1;
 
     /**
      * @var int purchase consumption state
@@ -46,7 +47,7 @@ final class Resource implements InitializationInterface {
     /**
      * @var int purchase state of the order
      */
-    private $purchaseState = 0;
+    private $purchaseState = self::ORDER_UNKNOWN;
 
     /**
      * @var int time the product was purchased, milliseconds
