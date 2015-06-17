@@ -2,7 +2,7 @@
     "name": "alxmsl/googleclient",
     "description": "Google services API library",
     "keywords": ["google", "apis", "gcm", "inapp"],
-    "license": "WTFPL",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "alxmsl",
