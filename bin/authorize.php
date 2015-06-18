@@ -42,11 +42,11 @@ $Command->appendParameter(new Option('client', 'c', 'client id', Option::TYPE_ST
     , function($name, $value) use (&$clientId) {
         $clientId = $value;
     });
-$Command->appendParameter(new Option('redirect', 'r', 'redirect uri', Option::TYPE_STRING)
+$Command->appendParameter(new Option('redirect', 'r', 'redirect uri', Option::TYPE_STRING, true)
     , function($name, $value) use (&$redirectUri) {
         $redirectUri = $value;
     });
-$Command->appendParameter(new Option('scopes', 's', 'grant scopes', Option::TYPE_STRING)
+$Command->appendParameter(new Option('scopes', 's', 'grant scopes', Option::TYPE_STRING, true)
     , function($name, $value) use (&$scopes) {
         $scopes = explode(',', $value);
     });

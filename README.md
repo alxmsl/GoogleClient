@@ -76,7 +76,7 @@ To authorize client via [Google OAuth2](https://developers.google.com/android-pu
 
 You could see examples [webclient.uri.php](/examples/webclient.uri.php) about uri creation, and 
  [webclient.authorize.php](/examples/webclient.authorize.php) about code authentication. Already you could use completed 
- 5script [authorize.php](/bin/authorize.php)
+ script [authorize.php](/bin/authorize.php)
  
 ```
 $ php bin/authorize.php

@@ -35,7 +35,7 @@ $Command = new CommandPosix();
 $Command->appendHelpParameter('show help');
 $Command->appendParameter(new Option('data', 'd', 'payload data', Option::TYPE_STRING)
     , function($name, $value) use (&$data) {
-        $data = $value;
+        $data = json_decode($value, true);
     });
 $Command->appendParameter(new Option('id', 'i', 'device registration id', Option::TYPE_STRING, true)
     , function($name, $value) use (&$id) {
@@ -59,6 +59,7 @@ try {
 
     // Create GCM client
     $Client = new Client();
+    $Client->getRequest()->setTimeout(5);
     $Client->getRequest()->setConnectTimeout(60)
         ->setSslVersion(6);
     $Client->setAuthorizationKey($key);
@@ -68,6 +69,7 @@ try {
     printf(<<<'EOD'
     success: %s
     failure: %s
+
 EOD
         , $Response->getSuccessCount()
         , $Response->getFailureCount());
