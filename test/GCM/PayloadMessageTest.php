@@ -89,9 +89,11 @@ final class PayloadMessageTest extends PHPUnit_Framework_TestCase {
         ]);
 
         $Message1 = new PayloadMessage();
+        $Message1->setRegistrationIds('Reg15TRaTi0N_1d1');
         $Message1->setType(PayloadMessage::TYPE_PLAIN);
         $Message1->setData($Data);
         $this->assertEquals([
+            'registration_id'  => 'Reg15TRaTi0N_1d1',
             'data.key1'        => 'val1',
             'data.key2'        => 54,
             'delay_while_idle' => false,
