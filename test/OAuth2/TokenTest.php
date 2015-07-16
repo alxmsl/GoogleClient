@@ -42,6 +42,12 @@ final class TokenTest extends PHPUnit_Framework_TestCase {
             $this->assertEmpty($Token->getRefreshToken());
             $this->fail();
         } catch (OutOfBoundsException $Ex) {}
+
+        $this->assertEquals('    access token:  lalala
+    expires in:    3600
+    id token:      -
+    refresh token: not available for online type
+    token type:    1', (string) $Token);
     }
 
     public function testTokenType() {
@@ -72,5 +78,10 @@ final class TokenTest extends PHPUnit_Framework_TestCase {
         }');
         $this->assertEquals('someREFREshTOken', $Token->getRefreshToken());
         $this->assertFalse($Token->isOnline());
+        $this->assertEquals('    access token:  lalala
+    expires in:    3600
+    id token:      -
+    refresh token: someREFREshTOken
+    token type:    1', (string) $Token);
     }
 }

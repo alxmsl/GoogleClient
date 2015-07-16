@@ -214,11 +214,16 @@ final class Token implements InitializationInterface {
     refresh token: %s
     token type:    %s
 EOD;
+        try {
+            $refreshToken = $this->getRefreshToken();
+        } catch (OutOfBoundsException $Ex) {
+            $refreshToken = 'not available for online type';
+        }
         return sprintf($format
             , $this->getAccessToken()
             , $this->getExpiresIn()
-            , $this->getIdToken()
-            , $this->getRefreshToken()
+            , $this->getIdToken() ?: '-'
+            , $refreshToken
             , $this->getTokenType());
     }
 }
