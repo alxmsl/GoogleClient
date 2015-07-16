@@ -21,6 +21,7 @@ use alxmsl\Google\AndroidPublisher\InAppProducts\Date;
 use alxmsl\Google\AndroidPublisher\InAppProducts\Listing;
 use alxmsl\Google\AndroidPublisher\InAppProducts\Price;
 use alxmsl\Google\AndroidPublisher\InAppProducts\Resource;
+use alxmsl\Google\AndroidPublisher\InAppProducts\Season;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -307,6 +308,16 @@ final class ResourceTest extends PHPUnit_Framework_TestCase {
    "currency": "VND"
   }
  },
+ "season": {
+   "start": {
+    "month": 7,
+    "day": 15
+   },
+   "end": {
+    "month": 8,
+    "day": 15
+   }
+ },
  "listings": {
   "en-US": {
    "title": "Subscription: 1 month.",
@@ -333,5 +344,18 @@ final class ResourceTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('Subscription: 1 month.', $Resource->getListings()['en-US']->getDescription());
         $this->assertEquals('en-US', $Resource->getDefaultLanguage());
         $this->assertEquals('P1M', $Resource->getSubscriptionPeriod());
+        $this->assertInstanceOf(Season::class, $Resource->getSeason());
+        $this->assertInstanceOf(Date::class, $Resource->getSeason()->getStart());
+        $this->assertEquals(7, $Resource->getSeason()->getStart()->getMonth());
+        $this->assertEquals(15, $Resource->getSeason()->getStart()->getDay());
+        $this->assertInstanceOf(Date::class, $Resource->getSeason()->getEnd());
+        $this->assertEquals(8, $Resource->getSeason()->getEnd()->getMonth());
+        $this->assertEquals(15, $Resource->getSeason()->getEnd()->getDay());
+
+        $this->assertEquals('    language: en-US
+    package:  com.example.example
+    type:     subscription
+    sku:      com.example.example.subscription
+    status:   active', (string) $Resource);
     }
 }
