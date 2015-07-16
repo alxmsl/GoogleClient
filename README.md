@@ -1,7 +1,10 @@
 GoogleClient
 ===
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Build Status](https://travis-ci.org/alxmsl/GoogleClient.png?branch=master)](http://travis-ci.org/alxmsl/GoogleClient)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/alxmsl/GoogleClient/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/alxmsl/GoogleClient/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/alxmsl/GoogleClient/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/alxmsl/GoogleClient/?branch=master)
 
 Google services API library. 
 Supported APIs:
@@ -17,29 +20,13 @@ Installation
 For install library you need to modify your composer configuration file
 
 ```
-    "alxmsl/googleclient": "v1.*"
+    "alxmsl/googleclient": "*"
 ```
 
 And just run installation command
 
 ```
     $ composer.phar install
-```
-
-Tests
----
-
-For completely tests running just call `phpunit` command
-
-```
-    $ phpunit
-    PHPUnit 4.7.3 by Sebastian Bergmann and contributors.
-
-    ..........................................
-    
-    Time: 118 ms, Memory: 7.25Mb
-    
-    OK (42 tests, 365 assertions)
 ```
 
 ## <a name="oauth2"></a> OAuth2 authorization
@@ -234,6 +221,22 @@ How to check subscription, for example:
     /** @var SubscriptionsResource $Resource */
     $Resource = $Client->get(<subscription id>, <purchase token>);
     var_dump($Resource->isAutoRenewing() && !$Resource->isExpired());
+```
+
+Tests
+---
+
+For completely tests running just call `phpunit` command
+
+```
+    $ phpunit
+    PHPUnit 4.7.3 by Sebastian Bergmann and contributors.
+
+    ..........................................
+    
+    Time: 118 ms, Memory: 7.25Mb
+    
+    OK (42 tests, 365 assertions)
 ```
 
 License
