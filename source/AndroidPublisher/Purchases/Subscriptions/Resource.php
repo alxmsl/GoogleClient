@@ -66,7 +66,7 @@ final class Resource implements InitializationInterface {
     }
 
     /**
-     * @return string whether the subscription will automatically be renewed when it reaches its current expiry time
+     * @return bool whether the subscription will automatically be renewed when it reaches its current expiry time
      */
     public function isAutoRenewing() {
         return $this->autoRenewing;

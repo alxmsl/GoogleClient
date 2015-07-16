@@ -140,18 +140,26 @@ final class ResourceTest extends PHPUnit_Framework_TestCase {
         $this->assertSame(1434573608845, $Resource2->getStartTimeMillis());
         $this->assertFalse($Resource2->isAutoRenewing());
         $this->assertTrue($Resource2->isExpired());
+        $this->assertEquals('    started at:    2015-06-17 23:40:08
+    expired at:    1970-01-01 03:01:40
+    kind:          androidpublisher#subscriptionPurchase
+    auto-renewing: disabled', (string) $Resource2);
 
-        $Resource1 = SubscriptionsResource::initializeByString('{
+        $Resource3 = SubscriptionsResource::initializeByString('{
  "kind": "androidpublisher#subscriptionPurchase",
  "startTimeMillis": "1434573608845",
  "expiryTimeMillis": "4434573608845",
  "autoRenewing": true
 }');
-        $this->assertSame(4434573608.845, $Resource1->getExpiryTime());
-        $this->assertSame(4434573608845, $Resource1->getExpiryTimeMillis());
-        $this->assertEquals('androidpublisher#subscriptionPurchase', $Resource1->getKind());
-        $this->assertSame(1434573608845, $Resource1->getStartTimeMillis());
-        $this->assertTrue($Resource1->isAutoRenewing());
-        $this->assertFalse($Resource1->isExpired());
+        $this->assertSame(4434573608.845, $Resource3->getExpiryTime());
+        $this->assertSame(4434573608845, $Resource3->getExpiryTimeMillis());
+        $this->assertEquals('androidpublisher#subscriptionPurchase', $Resource3->getKind());
+        $this->assertSame(1434573608845, $Resource3->getStartTimeMillis());
+        $this->assertTrue($Resource3->isAutoRenewing());
+        $this->assertFalse($Resource3->isExpired());
+        $this->assertEquals('    started at:    2015-06-17 23:40:08
+    expired at:    2110-07-12 05:00:08
+    kind:          androidpublisher#subscriptionPurchase
+    auto-renewing: enabled', (string) $Resource3);
     }
 }
