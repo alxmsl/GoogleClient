@@ -133,4 +133,15 @@ final class PayloadMessageTest extends PHPUnit_Framework_TestCase {
             $this->fail();
         } catch (GCMRegistrationIdsIncorrectForMessageType $Ex) {}
     }
+
+    public function testPayloadDataType() {
+        $Data = new CustomPayloadData([]);
+        $this->assertEquals(PayloadMessage::TYPE_PLAIN, $Data->getType());
+        $Message = new PayloadMessage();
+        $Message->setData($Data);
+        $Message->setType(PayloadMessage::TYPE_JSON);
+        $this->assertEquals(PayloadMessage::TYPE_JSON, $Data->getType());
+        $Message->setType(PayloadMessage::TYPE_PLAIN);
+        $this->assertEquals(PayloadMessage::TYPE_PLAIN, $Data->getType());
+    }
 }
