@@ -152,7 +152,7 @@ final class Resource implements InitializationInterface {
                 $purchaseState = 'cancelled';
                 break;
             case self::ORDER_PURCHASED:
-                $purchaseState = 'purchase';
+                $purchaseState = 'purchased';
                 break;
         }
 

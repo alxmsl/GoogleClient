@@ -54,6 +54,11 @@ final class ResourceTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($Resource1->isCancelled());
         $this->assertTrue($Resource1->isConsumed());
         $this->assertTrue($Resource1->isPurchased());
+        $this->assertEquals('    consumptionState:   consumed
+    developerPayload:   {"codeVersion":30700,"hash":862428815}
+    kind:               androidpublisher#productPurchase
+    purchaseState:      purchased
+    purchaseTimeMillis: 2015-06-17 23:06:26', (string) $Resource1);
 
         $Resource2 = PurchasesResource::initializeByString('{
  "kind": "androidpublisher#productPurchase",
@@ -70,6 +75,11 @@ final class ResourceTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($Resource2->isCancelled());
         $this->assertFalse($Resource2->isConsumed());
         $this->assertTrue($Resource2->isPurchased());
+        $this->assertEquals('    consumptionState:   yet to be consumed
+    developerPayload:   {"codeVersion":30700,"hash":862428815}
+    kind:               androidpublisher#productPurchase
+    purchaseState:      purchased
+    purchaseTimeMillis: 2015-06-17 23:06:26', (string) $Resource2);
 
         $Resource3 = PurchasesResource::initializeByString('{
  "kind": "androidpublisher#productPurchase",
@@ -86,6 +96,11 @@ final class ResourceTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($Resource3->isCancelled());
         $this->assertFalse($Resource3->isConsumed());
         $this->assertFalse($Resource3->isPurchased());
+        $this->assertEquals('    consumptionState:   yet to be consumed
+    developerPayload:   {"codeVersion":30700,"hash":862428815}
+    kind:               androidpublisher#productPurchase
+    purchaseState:      cancelled
+    purchaseTimeMillis: 2015-06-17 23:06:26', (string) $Resource3);
 
         $Resource4 = PurchasesResource::initializeByString('{
  "kind": "androidpublisher#productPurchase",
@@ -102,6 +117,11 @@ final class ResourceTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($Resource4->isCancelled());
         $this->assertTrue($Resource4->isConsumed());
         $this->assertFalse($Resource4->isPurchased());
+        $this->assertEquals('    consumptionState:   consumed
+    developerPayload:   {"codeVersion":30700,"hash":862428815}
+    kind:               androidpublisher#productPurchase
+    purchaseState:      cancelled
+    purchaseTimeMillis: 2015-06-17 23:06:26', (string) $Resource4);
     }
     
     public function testSubscriptionsResourceInitialState() {
