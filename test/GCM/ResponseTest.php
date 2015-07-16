@@ -80,6 +80,11 @@ something');
         $this->assertCount(1, $Response3->getResults());
         $this->assertInstanceOf(Status::class, $Response3->getResults()[0]);
         $this->assertEquals('error:MissingRegistration', $Response3->getResults()[0]->getError());
+
+        try {
+            Response::initializeByString('oioioi');
+            $this->fail();
+        } catch (GCMFormatException $Ex) {}
     }
 
     public function testJsonResponse() {
