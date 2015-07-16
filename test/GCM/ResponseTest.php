@@ -17,6 +17,7 @@
 
 namespace alxmsl\Test\Google\GCM;
 
+use alxmsl\Google\GCM\Exception\GCMFormatException;
 use alxmsl\Google\GCM\Message\PayloadMessage;
 use alxmsl\Google\GCM\Response\Response;
 use alxmsl\Google\GCM\Response\Status;
@@ -107,5 +108,20 @@ registration_id=32');
         $this->assertInstanceOf(Status::class, $Response2->getResults()[3]);
         $this->assertInstanceOf(Status::class, $Response2->getResults()[4]);
         $this->assertInstanceOf(Status::class, $Response2->getResults()[5]);
+    }
+
+    public function testUnknownTypeResponse() {
+        Response::$type = 88;
+        try {
+            Response::initializeByString('{ "multicast_id": 108,
+      "success": 1,
+      "failure": 0,
+      "canonical_ids": 0,
+      "results": [
+        { "message_id": "1:08" }
+      ]
+    }');
+            $this->fail();
+        } catch (GCMFormatException $Ex) {}
     }
 }
