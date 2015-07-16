@@ -17,6 +17,7 @@
 
 namespace alxmsl\Test\Google\GCM;
 
+use alxmsl\Google\GCM\Exception\GCMRegistrationIdsIncorrectForMessageType;
 use alxmsl\Google\GCM\Message\CustomPayloadData;
 use alxmsl\Google\GCM\Message\PayloadMessage;
 use PHPUnit_Framework_TestCase;
@@ -108,5 +109,28 @@ final class PayloadMessageTest extends PHPUnit_Framework_TestCase {
                 'key2' => 54,
             ],
         ], $Message2->export());
+    }
+
+    public function testPlainTypeForManyRegistrationIds() {
+        $Message1 = new PayloadMessage();
+        $Message1->setRegistrationIds('Reg15TRaTi0N_1d1');
+        $Message1->setType(PayloadMessage::TYPE_PLAIN);
+        $this->assertEquals('Reg15TRaTi0N_1d1', $Message1->getRegistrationIds());
+
+        $Message2 = new PayloadMessage();
+        $Message2->setType(PayloadMessage::TYPE_JSON);
+        $Message2->setRegistrationIds(['Reg15TRaTi0N_1d1']);
+        $this->assertEquals(['Reg15TRaTi0N_1d1'], $Message2->getRegistrationIds());
+        $Message2->setType(PayloadMessage::TYPE_PLAIN);
+        $this->assertEquals('Reg15TRaTi0N_1d1', $Message2->getRegistrationIds());
+
+        $Message3 = new PayloadMessage();
+        $Message3->setType(PayloadMessage::TYPE_JSON);
+        $Message3->setRegistrationIds(['Reg15TRaTi0N_1d1', 'Reg15TRaTi0N_1d2']);
+        $this->assertEquals(['Reg15TRaTi0N_1d1', 'Reg15TRaTi0N_1d2'], $Message3->getRegistrationIds());
+        try {
+            $Message3->setType(PayloadMessage::TYPE_PLAIN);
+            $this->fail();
+        } catch (GCMRegistrationIdsIncorrectForMessageType $Ex) {}
     }
 }
