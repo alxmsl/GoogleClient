@@ -66,6 +66,20 @@ registration_id=32');
         $this->assertEquals(1, $Response2->getSuccessCount());
         $this->assertCount(1, $Response2->getResults());
         $this->assertInstanceOf(Status::class, $Response2->getResults()[0]);
+
+        try {
+            Response::initializeByString('id=1:2342
+something');
+            $this->fail();
+        } catch (GCMFormatException $Ex) {}
+
+        $Response3 = Response::initializeByString('Error=error:MissingRegistration');
+        $this->assertEquals(0, $Response3->getCanonicalIdsCount());
+        $this->assertEquals(1, $Response3->getFailureCount());
+        $this->assertEquals(0, $Response3->getSuccessCount());
+        $this->assertCount(1, $Response3->getResults());
+        $this->assertInstanceOf(Status::class, $Response3->getResults()[0]);
+        $this->assertEquals('error:MissingRegistration', $Response3->getResults()[0]->getError());
     }
 
     public function testJsonResponse() {
