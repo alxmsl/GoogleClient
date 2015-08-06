@@ -207,4 +207,20 @@ final class ErrorExceptionTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('0', $Exception3->getCode());
         $this->assertEquals('Not Found', $Exception3->getMessage());
     }
+
+    public function testMissingErrorFields() {
+        $Exception1 = ErrorException::initializeByString('{
+ "error": {
+  "code": 404,
+  "message": "Not found"
+ }
+}');
+        $this->assertInstanceOf(ErrorException::class, $Exception1);
+        $this->assertEquals('404', $Exception1->getCode());
+        $this->assertEquals('Not found', $Exception1->getMessage());
+
+        $Exception2 = ErrorException::initializeByString('Not found');
+        $this->assertInstanceOf(ErrorException::class, $Exception2);
+        $this->assertEquals('Not found', $Exception2->getMessage());
+    }
 }
