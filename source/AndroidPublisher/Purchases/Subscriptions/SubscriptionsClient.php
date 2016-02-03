@@ -131,8 +131,7 @@ final class SubscriptionsClient extends Client implements SubscriptionsClientInt
             ->addUrlField('applications', $this->getPackage())
             ->addUrlField(self::URI_SUBSCRIPTIONS, '')
             ->addUrlField('products', $productId)
-            ->addUrlField('tokens', $token)
-            ->addUrlField(sprintf(':%s', $command), '')
+            ->addUrlField('tokens', sprintf('%s:%s', $token, $command))
             ->addGetField('access_token', $this->getAccessToken());
         $Request->setMethod(Request::METHOD_POST);
         return $Request;
