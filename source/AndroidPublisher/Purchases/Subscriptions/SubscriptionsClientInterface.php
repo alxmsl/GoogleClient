@@ -76,5 +76,5 @@ interface SubscriptionsClientInterface extends ClientInterface {
      * @throws TransportException when HTTP transport error occurred
      * @throws UnexpectedValueException when access token is empty for client
      */
-    public function revoke($productId, $token);
+    public function revokeSubscription($productId, $token);
 }

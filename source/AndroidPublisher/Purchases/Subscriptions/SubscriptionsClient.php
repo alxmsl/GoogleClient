@@ -70,7 +70,7 @@ final class SubscriptionsClient extends Client implements SubscriptionsClientInt
     /**
      * @inheritdoc
      */
-    public function revoke($productId, $token) {
+    public function revokeSubscription($productId, $token) {
         $this->sendRequest('revoke', $productId, $token);
         return true;
     }
