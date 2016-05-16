@@ -54,7 +54,7 @@ try {
     $Client = new SubscriptionsClient();
     $Client->setPackage($packageName)
         ->setAccessToken($accessToken);
-    $Resource = $Client->revoke($subscriptionId, $token);
+    $Resource = $Client->revokeSubscription($subscriptionId, $token);
     printf("subscription %s revoked\n", $subscriptionId);
 } catch (RequiredOptionException $Ex) {
     $Command->displayHelp();
