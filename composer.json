@@ -1,5 +1,5 @@
 {
-    "name": "alxmsl/googleclient",
+    "name": "Topface/googleclient",
     "description": "Google services API library",
     "keywords": ["google", "apis", "gcm", "inapp"],
     "license": "Apache-2.0",
