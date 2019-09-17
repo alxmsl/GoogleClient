@@ -42,7 +42,7 @@ final class Client {
     /**
      * GCM sender service endpoint
      */
-    const ENDPOINT_SEND = 'https://android.googleapis.com/gcm/send';
+    const ENDPOINT_SEND = 'https://fcm.googleapis.com/fcm/send';
 
     /**
      * @var string authorization key
